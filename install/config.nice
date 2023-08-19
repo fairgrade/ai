@@ -1,0 +1,49 @@
+#! /bin/sh
+#
+# Created by configure
+
+'./configure' \
+'--with-openssl' \
+'--with-curl' \
+'--enable-opcache' \
+'--enable-bcmath' \
+'--with-bz2' \
+'--enable-calendar' \
+'--enable-ctype' \
+'--enable-dba' \
+'--enable-dom' \
+'--enable-exif' \
+'--enable-fileinfo' \
+'--enable-ftp' \
+'--enable-gd' \
+'--with-freetype' \
+'--with-gettext' \
+'--with-gmp' \
+'--with-iconv' \
+'--with-jpeg' \
+'--with-webp' \
+'--with-zlib' \
+'--enable-mbstring' \
+'--enable-mysqlnd' \
+'--enable-pdo' \
+'--with-pdo-mysql' \
+'--enable-phar' \
+'--enable-posix' \
+'--enable-shmop' \
+'--enable-simplexml' \
+'--enable-soap' \
+'--enable-sockets' \
+'--enable-sysvmsg' \
+'--enable-sysvsem' \
+'--enable-sysvshm' \
+'--enable-tokenizer' \
+'--enable-xml' \
+'--enable-xmlwriter' \
+'--with-xsl' \
+'--with-mysqli' \
+'--with-pdo_mysql' \
+'--enable-xmlreader' \
+'--enable-zts' \
+'--enable-pcntl' \
+'--enable-fd-setsize=256000' \
+"$@"
