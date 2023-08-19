@@ -1,0 +1,53 @@
+{
+    "name": "bunny/bunny",
+    "type": "library",
+    "description": "Performant pure-PHP AMQP (RabbitMQ) sync/async (ReactPHP) library",
+    "keywords": [
+        "rabbitmq",
+        "rabbit",
+        "bunny",
+        "amqp",
+        "messaging",
+        "message",
+        "queue",
+        "queueing",
+        "exchange",
+        "react",
+        "react-php",
+        "reactphp"
+    ],
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jakub Kulhan",
+            "email": "jakub.kulhan@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^7.1 || ^8.0",
+        "react/event-loop": "^1.0 || ^0.5 || ^0.4",
+        "react/promise": "~2.2"
+    },
+    "require-dev": {
+        "ext-pcntl": "*",
+        "phpunit/phpunit": "^9.5 || ^7.5.20",
+        "symfony/process": "^6.1 || ^4.4",
+        "phpstan/phpstan": "^1.10"
+    },
+    "suggest": {
+        "ext-pcntl": "For using synchronous AMQP/RabbitMQ client"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bunny\\": "src/Bunny/"
+        }
+    },
+    "autoload-dev": {
+        "files": ["test/Library/functions.php"],
+        "psr-4": {
+            "Bunny\\": "test/Bunny/",
+            "Bunny\\Test\\Library\\": "test/Library/"
+        }
+    }
+}
