@@ -18,10 +18,15 @@ class ComposerStaticInitc0db8b3eae41383e1368f5c9b72d8b1a
         '3be16222a6efa6dd226a219eaaff823b' => __DIR__ . '/..' . '/ratchet/pawl/src/functions_include.php',
         '83835a8f9e1906eeec7f4923b03042b8' => __DIR__ . '/..' . '/react/partial/src/functions.php',
         '61ba3e92ef91a7a0f1cc260ebd9290e4' => __DIR__ . '/..' . '/openai-php/client/src/OpenAI.php',
+        'c4e03ecd470d2a87804979c0a8152284' => __DIR__ . '/..' . '/react/async/src/functions_include.php',
         '864b292aadc96fda0e2642b894a38d16' => __DIR__ . '/..' . '/team-reflex/discord-php/src/Discord/functions.php',
     );
 
     public static $prefixLengthsPsr4 = array (
+        'T' => 
+        array (
+            'TikToken\\' => 9,
+        ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Php80\\' => 23,
@@ -46,6 +51,7 @@ class ComposerStaticInitc0db8b3eae41383e1368f5c9b72d8b1a
             'React\\Datagram\\' => 15,
             'React\\ChildProcess\\' => 19,
             'React\\Cache\\' => 12,
+            'React\\Async\\' => 12,
             'Ratchet\\RFC6455\\' => 16,
             'Ratchet\\Client\\' => 15,
         ),
@@ -98,6 +104,10 @@ class ComposerStaticInitc0db8b3eae41383e1368f5c9b72d8b1a
     );
 
     public static $prefixDirsPsr4 = array (
+        'TikToken\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mehrab-wj/tiktoken-php/src',
+        ),
         'Symfony\\Polyfill\\Php80\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php80',
@@ -173,6 +183,10 @@ class ComposerStaticInitc0db8b3eae41383e1368f5c9b72d8b1a
         'React\\Cache\\' => 
         array (
             0 => __DIR__ . '/..' . '/react/cache/src',
+        ),
+        'React\\Async\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/react/async/src',
         ),
         'Ratchet\\RFC6455\\' => 
         array (

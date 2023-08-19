@@ -6,6 +6,7 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'TikToken\\' => array($vendorDir . '/mehrab-wj/tiktoken-php/src'),
     'Symfony\\Polyfill\\Php80\\' => array($vendorDir . '/symfony/polyfill-php80'),
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
     'Symfony\\Contracts\\Translation\\' => array($vendorDir . '/symfony/translation-contracts'),
@@ -25,6 +26,7 @@ return array(
     'React\\Datagram\\' => array($vendorDir . '/react/datagram/src'),
     'React\\ChildProcess\\' => array($vendorDir . '/react/child-process/src'),
     'React\\Cache\\' => array($vendorDir . '/react/cache/src'),
+    'React\\Async\\' => array($vendorDir . '/react/async/src'),
     'Ratchet\\RFC6455\\' => array($vendorDir . '/ratchet/rfc6455/src'),
     'Ratchet\\Client\\' => array($vendorDir . '/ratchet/pawl/src'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/src'),

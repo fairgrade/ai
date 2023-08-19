@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1b5f654788b6b994833b6cfd9fcd255a",
+    "content-hash": "7dad00058fa649758cb05b8632ba231c",
     "packages": [
         {
             "name": "bunny/bunny",
@@ -391,6 +391,53 @@
                 }
             ],
             "time": "2023-08-03T15:06:02+00:00"
+        },
+        {
+            "name": "mehrab-wj/tiktoken-php",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/mehrab-wj/tiktoken-php.git",
+                "reference": "f894247f05bb3494a9cb4bcad5d588e87ff50e73"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/mehrab-wj/tiktoken-php/zipball/f894247f05bb3494a9cb4bcad5d588e87ff50e73",
+                "reference": "f894247f05bb3494a9cb4bcad5d588e87ff50e73",
+                "shasum": ""
+            },
+            "require": {
+                "ext-mbstring": "*",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.14",
+                "phpstan/phpstan": "^1.9",
+                "phpunit/phpunit": "^9.5",
+                "rector/rector": "^0.15.12",
+                "symfony/var-dumper": "^6.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "TikToken\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mehrab Hojjati Pour",
+                    "email": "thisismehrab@gmail.com"
+                }
+            ],
+            "description": "a clone of python tiktoken but for PHP! fast BPE tokeniser for use with OpenAI's models.",
+            "support": {
+                "source": "https://github.com/mehrab-wj/tiktoken-php/tree/v1.0.0"
+            },
+            "time": "2023-04-19T18:36:48+00:00"
         },
         {
             "name": "mollie/polyfill-libsodium",
@@ -1337,6 +1384,81 @@
                 "source": "https://github.com/ratchetphp/RFC6455/tree/v0.3.1"
             },
             "time": "2021-12-09T23:20:49+00:00"
+        },
+        {
+            "name": "react/async",
+            "version": "v4.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/reactphp/async.git",
+                "reference": "b9641ac600b4b144e71a87dcf1be4d41dd3a3548"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/reactphp/async/zipball/b9641ac600b4b144e71a87dcf1be4d41dd3a3548",
+                "reference": "b9641ac600b4b144e71a87dcf1be4d41dd3a3548",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "react/event-loop": "^1.2",
+                "react/promise": "^3.0 || ^2.8 || ^1.2.1"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "1.10.18",
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/functions_include.php"
+                ],
+                "psr-4": {
+                    "React\\Async\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christian Lück",
+                    "email": "christian@clue.engineering",
+                    "homepage": "https://clue.engineering/"
+                },
+                {
+                    "name": "Cees-Jan Kiewiet",
+                    "email": "reactphp@ceesjankiewiet.nl",
+                    "homepage": "https://wyrihaximus.net/"
+                },
+                {
+                    "name": "Jan Sorgalla",
+                    "email": "jsorgalla@gmail.com",
+                    "homepage": "https://sorgalla.com/"
+                },
+                {
+                    "name": "Chris Boden",
+                    "email": "cboden@gmail.com",
+                    "homepage": "https://cboden.dev/"
+                }
+            ],
+            "description": "Async utilities and fibers for ReactPHP",
+            "keywords": [
+                "async",
+                "reactphp"
+            ],
+            "support": {
+                "issues": "https://github.com/reactphp/async/issues",
+                "source": "https://github.com/reactphp/async/tree/v4.1.0"
+            },
+            "funding": [
+                {
+                    "url": "https://opencollective.com/reactphp",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2023-06-22T14:10:50+00:00"
         },
         {
             "name": "react/cache",

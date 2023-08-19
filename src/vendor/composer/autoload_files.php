@@ -17,5 +17,6 @@ return array(
     '3be16222a6efa6dd226a219eaaff823b' => $vendorDir . '/ratchet/pawl/src/functions_include.php',
     '83835a8f9e1906eeec7f4923b03042b8' => $vendorDir . '/react/partial/src/functions.php',
     '61ba3e92ef91a7a0f1cc260ebd9290e4' => $vendorDir . '/openai-php/client/src/OpenAI.php',
+    'c4e03ecd470d2a87804979c0a8152284' => $vendorDir . '/react/async/src/functions_include.php',
     '864b292aadc96fda0e2642b894a38d16' => $vendorDir . '/team-reflex/discord-php/src/Discord/functions.php',
 );
