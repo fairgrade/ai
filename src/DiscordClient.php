@@ -159,11 +159,6 @@ Now, let's get started with the interview! I am the Artificial Interviewer.  I a
                         'inline' => true
                     ],
                     [
-                        'name' => '**__Auditor__**',
-                        'value' => $auditor_name,
-                        'inline' => true
-                    ],
-                    [
                         'name' => '**__Results__**',
                         'value' => $audit_results,
                         'inline' => true
@@ -180,7 +175,7 @@ Now, let's get started with the interview! I am the Artificial Interviewer.  I a
                     'icon_url' => 'https://fairgrade.com/images/logo.png'
                 ],
                 'author' => [
-                    'name' => 'Author Name',
+                    'name' => "**Independent Auditor: **$auditor_name",
                     'url' => 'https://fairgrade.com',
                     'icon_url' => 'https://fairgrade.com/images/logo.png'
                 ]
