@@ -1,8 +1,8 @@
 <?php
 try {
     $has_attachments = 0;
+    $allowed_extensions = ["pdf", "txt", "jpg", "jpeg", "png", "webp"];
     if (isset($message["attachments"])) {
-        $allowed_extensions = ["pdf", "txt", "jpg", "jpeg", "png", "webp"];
         foreach ($message["attachments"] as $attachment) {
             $has_attachments++;
             $file_extension = strtolower(pathinfo($attachment["filename"], PATHINFO_EXTENSION));
@@ -12,6 +12,23 @@ try {
             }
             $file_name = $attachment["filename"];
             $file_url = $attachment["url"];
+            $message2["t"] = "HANDLE_ATTACHMENT";
+            $message2["d"] = $message;
+            $message2["d"]["file_name"] = $file_name;
+            $attachment_names[] = $file_name;
+            $message2["d"]["file_url"] = $file_url;
+            $this->bunny->publish("ai_inbox", $message2);
+        }
+    }
+    // if $message[content] contains a URL that starts with an allowed attachment type then extract the file name and url and send it to HANDLE_ATTACHMENT
+    $allowed_extensions = ["pdf", "txt", "jpg", "jpeg", "png", "webp"];
+    $allowed_extensions_regex = implode("|", $allowed_extensions);
+    $regex = "/(https?:\/\/[^\s]+\.($allowed_extensions_regex))/i";
+    if (preg_match_all($regex, $message["content"], $matches)) {
+        foreach ($matches[1] as $match) {
+            $has_attachments++;
+            $file_name = basename($match);
+            $file_url = $match;
             $message2["t"] = "HANDLE_ATTACHMENT";
             $message2["d"] = $message;
             $message2["d"]["file_name"] = $file_name;
