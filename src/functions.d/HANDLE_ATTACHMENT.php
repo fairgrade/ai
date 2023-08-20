@@ -108,7 +108,7 @@ Use markdown formatting to organize the information."];
     else $full_response .= "\n\nAlso, I'm sorry, but " . $e->getMessage() . "\n";
 }
 
-if (strlen($full_response)) $this->sendMessage($message, ["content" => $full_response]);
+if (strlen($full_response)) $this->sendMessage($message, ["content" => $full_response . "\n\n=============\n\n✅ $file_name Analyzed! Please confirm the information is accurate and provide any information which is missing before continuing."]);
 unset($message["attachments"]);
 $next_message["t"] = "MESSAGE_CREATE";
 $next_message["d"] = $message;
