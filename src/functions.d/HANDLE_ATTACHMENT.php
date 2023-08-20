@@ -110,6 +110,8 @@ Use markdown formatting to organize the information."];
 
 if (strlen($full_response)) $this->sendMessage($message, ["content" => $full_response]);
 unset($message["attachments"]);
+$next_message["t"] = "MESSAGE_CREATE";
+$next_message["d"] = $message;
 $this->bunny->publish("ai_inbox", $message);
 sleep(2);
 return true;
