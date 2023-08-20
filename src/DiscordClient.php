@@ -126,7 +126,7 @@ class DiscordClient extends ConfigLoader
                     ]
                 ]
             ]));
-            $channel = Async\await($guild->channels->save($channel));
+            $channel = $guild->channels->save($channel);
             // send a Welcome message to the channel by tagging the user
             $welcome_message = "Welcome <@$member_id> to the Artificial Interview Discord Server!  I am the Artificial Interviewer.  I am here to help you with your interview.";
             // get the distribution date from the database
