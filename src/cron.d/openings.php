@@ -3,16 +3,17 @@
 
 namespace fairgrade\ai;
 
-$publish_message["t"] = "MESSAGE_CREATE";
+
+$publish_message = json_decode(file_get_contents(__DIR__ . '/template.json'), true);
 $microtime = number_format(microtime(true), 6, '.', '');
 $publish_message["d"]["microtime"] = $microtime;
 $publish_message["d"]["id"] = 1142616719630803116;
-$publish_message["d"]["author"]["id"] = 1142616719630803116;
 $publish_message["d"]["bot_id"] = 1142616719630803116;
 $publish_message["d"]["channel_id"] = 1142706861733318707;
 $publish_message["d"]["channel_name"] = "#openings";
 $publish_message["d"]["channel_topic"] = "Current Job Openings";
 $publish_message["d"]["content"] = "Pick one of the current openings to write a discord post about.  mention 2 others briefly.";
+
 publish("ai_inbox", $publish_message);
 
 function publish($queue, $data)
