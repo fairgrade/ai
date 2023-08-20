@@ -21,6 +21,7 @@ class InboxHandler extends ConfigLoader
 
     private function process($message)
     {
+	print_r($message);
         $this->promptwriter->query("SELECT 1");
         $function = $message["t"];
         $message = $message["d"];
@@ -59,6 +60,7 @@ class InboxHandler extends ConfigLoader
         $token_count = $this->promptwriter->token_count($content);
         $content = $this->promptwriter->escape($content);
         $this->promptwriter->query("INSERT INTO `web_context` (`message_id`,`microtime`,`sender_id`,`receiver_ids`,`role`,`content`,`token_count`,`discord`) VALUES ('$message_id','$microtime','$user_id','$bot_id','$role','$content','$token_count','1') ON DUPLICATE KEY UPDATE `receiver_ids` = CONCAT(`receiver_ids`,' $bot_id'), `microtime` = '$microtime'");
+	echo("log_incomming complete.\n");
         return true;
     }
 }
