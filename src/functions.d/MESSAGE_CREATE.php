@@ -3,7 +3,7 @@ try {
     $this->log_incomming($message);
     $message["context"] = "discord";
     extract($this->promptwriter->single("SELECT `microtime` FROM `discord_channels` WHERE `channel_id` = {$message["channel_id"]} AND `bot_id` = {$message["bot_id"]}"));
-    if ($microtime != $message["microtime"]) {
+    if ($microtime != $message["microtime"] && $message["microtime"] != -1) {
         return true;
     }
     $this->start_typing($message);
@@ -43,9 +43,7 @@ try {
     if (!isset($full_response) || $full_response == "") $full_response = "I'm sorry, but " . $e->getMessage() . "\n";
     else $full_response .= "\n\nAlso, I'm sorry, but " . $e->getMessage() . "\n";
 }
-if (strlen($full_response)) $this->sendMessage($message, ["content" => $full_response]);
 
-$followup = "";
-if (strlen($followup)) $this->sendMessage($message, ["content" => $followup]);
+if (strlen($full_response)) $this->sendMessage($message, ["content" => $full_response]);
 sleep(2);
 return true;

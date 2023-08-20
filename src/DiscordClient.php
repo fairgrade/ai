@@ -59,22 +59,136 @@ class DiscordClient extends ConfigLoader
         //print_r($message);
         if ($message->op == 11) {
             $this->promptwriter->query("SELECT 1");
+            $message = json_decode(json_encode($message), true);
+            $message["t"] = "HEARTBEAT";
             return $this->bunny->publish("ai_inbox", $message);
         }
         if ($message->t == "GUILD_CREATE") {
             $guild_id = $message->d->id;
-            $sql = "INSERT INTO `dc_bot2server` (`bot_id`, `server_id`) VALUES ('{$this->bot_id}', '{$guild_id}') ON DUPLICATE KEY UPDATE `server_id` = '{$guild_id}';";
+            $sql = "INSERT INTO `discord_bot2server` (`bot_id`, `server_id`) VALUES ('{$this->bot_id}', '{$guild_id}') ON DUPLICATE KEY UPDATE `server_id` = '{$guild_id}';";
             $sql .= "UPDATE `discord_servers` SET `server_avatar` = '{$message->d->icon}' WHERE `server_id` = '{$guild_id}';";
             $this->promptwriter->multi($sql);
             return true;
         }
         if ($message->t == "GUILD_DELETE") {
             $guild_id = $message->d->id;
-            $this->promptwriter->query("DELETE FROM `dc_bot2server` WHERE `bot_id` = '{$this->bot_id}' AND `server_id` = '{$guild_id}'");
+            $this->promptwriter->query("DELETE FROM `discord_bot2server` WHERE `bot_id` = '{$this->bot_id}' AND `server_id` = '{$guild_id}'");
             return true;
         }
         if ($message->t == "MESSAGE_DELETE") {
             $this->promptwriter->query("DELETE FROM `web_context` WHERE `message_id` = '{$message->d->id}'");
+            return true;
+        }
+        // on new member joining server
+        if ($message->t == "GUILD_MEMBER_ADD") {
+            $guild = $discord->guilds[$message->d->guild_id];
+            $guild_id = $message->d->guild_id;
+            $member_id = $message->d->user->id;
+            $member_name = $message->d->user->username;
+            $member_avatar = $message->d->user->avatar;
+            $member_discriminator = $message->d->user->discriminator;
+            $member_avatar_url = $this->promptwriter->escape($member_avatar);
+            $member_name = $this->promptwriter->escape($member_name);
+            $this->promptwriter->query("INSERT INTO discord_users
+                (discord_id, discord_username, discord_avatar, discord_discriminator)
+            VALUES
+                ('$member_id', '$member_name', '$member_avatar_url', '$member_discriminator')
+            ON DUPLICATE KEY UPDATE 
+                discord_username = VALUES(discord_username),
+                discord_avatar = VALUES(discord_avatar),
+                discord_discriminator = VALUES(discord_discriminator);");
+            // create the user their own private channel and set their username as the channel name and set the channel topic as "Artificial Interview with $member_name"
+            $channel_topic = "Artificial Interview with $member_name";
+            $channel_name = $member_name;
+            // create the channel in discord
+            $channel = $guild->channels->create([
+                'name' => $channel_name,
+                'topic' => $channel_topic,
+                'permission_overwrites' => [
+                    [
+                        'id' => $member_id,
+                        'type' => 'member',
+                        'allow' => 1024,
+                        'deny' => 0
+                    ],
+                    [
+                        'id' => $this->bot_id,
+                        'type' => 'member',
+                        'allow' => 1024,
+                        'deny' => 0
+                    ],
+                    [
+                        'id' => $guild_id,
+                        'type' => 'role',
+                        'allow' => 0,
+                        'deny' => 1024
+                    ]
+                ]
+            ]);
+            $channel = Async\await($guild->channels->save($channel));
+            // send a Welcome message to the channel by tagging the user
+            $welcome_message = "# Welcome to the interview, <@$member_id>!
+Before we begin, please note the following important information:
+- Talent Solutions NYC is a fictious company used for the live demo of FairGrade.ai. Any resemblance to actual persons, companies, living or dead, or actual events is purely coincidental.
+- This interview is being recorded for record-keeping and evaluation purposes in compliance with applicable laws. By participating in this interview, you consent to the recording.
+- This service is proudly made in the USA 🇺🇸, so we are not GDPR compliant. If you are located in the European Union and concerned about your privacy, please refrain from using this service.
+- We are CCPA compliant. If you are in California, you may use this service.
+- We are also HIPAA compliant, making this service suitable for covered entities or business associates under HIPAA.
+- If you are under 13 years of age, please note that you may not use this service as we are COPPA compliant.
+- For schools or school districts, we are FERPA compliant, ensuring the privacy and security of educational records.
+- We are committed to equal opportunity employment.
+- Lastly, this interview is conducted using an Automated Employment Decision Tool (AEDT). If you are in New York City, you may use this service in accordance with the NYC AEDT laws.
+Please review this information carefully before proceeding with the interview. If you have any questions or concerns, feel free to let us know. We value transparency and aim to provide a fair and compliant hiring process. 
+
+Now, let's get started with the interview! I am the Artificial Interviewer.  I am here to help you with your interview.  Please begin by uploading or sending a link to your resume in PDF, DOCX, or TXT or just start by introducing yourself or asking any questions you may have. Let's start with your full name and what do you prefer to be called?";
+            // get the distribution date from the database
+            extract($this->promptwriter->single("SELECT min(`audit_date`) as `distribution_date` FROM `bias_audit`"));
+            extract($this->promptwriter->single("SELECT * FROM `bias_audit` ORDER BY `audit_date` DESC LIMIT 1"));
+            $audit_timestamp = strtotime($audit_date);
+            // send a message to the channel with the distribution date
+            // use the builder function to create an embed message
+            $builder = \Discord\Builders\MessageBuilder::new();
+            $builder->addEmbed(new \Discord\Parts\Embed\Embed($this->discord, [
+                'title' => 'FairGrade Bias Audit Report',
+                'description' => "AEDT Distribution Date: $distribution_date",
+                'url' => 'https://fairgrade.ai/bias_audit',
+                'color' => 0x00ff00,
+                'fields' => [
+                    [
+                        'name' => '**__Last Audit Date__**',
+                        'value' => $audit_date . "\n<t:$audit_timestamp:R>",
+                        'inline' => true
+                    ],
+                    [
+                        'name' => '**__Results__**',
+                        'value' => $audit_results,
+                        'inline' => true
+                    ]
+                ],
+                'thumbnail' => [
+                    'url' => 'https://fairgrade.ai/images/logo.png'
+                ],
+                'image' => [
+                    'url' => 'https://fairgrade.ai/images/logo.png'
+                ],
+                'footer' => [
+                    'text' => 'Powered by FairGrade.ai',
+                    'icon_url' => 'https://fairgrade.ai/images/logo.png'
+                ],
+                'author' => [
+                    'name' => "Independently Audited By:\n$auditor_name",
+                    'url' => 'https://example.com',
+                    'icon_url' => 'https://fairgrade.ai/images/logo.png'
+                ]
+            ]));
+            $this->log_outgoing(Async\await($channel->sendMessage($builder)));
+            // send a message to the channel with the welcome message
+            $this->log_outgoing(Async\await($channel->sendMessage($welcome_message)));
+            // get the channel id
+            $channel_id = $channel->id;
+            // insert the channel id into the database
+            $microtime = number_format(microtime(true), 6, '.', '');
+            $this->promptwriter->query("INSERT INTO `discord_channels` (`channel_id`, `bot_id`, `dedicated`, `microtime`) VALUES ('$channel_id', '{$this->bot_id}', '1', '$microtime') ON DUPLICATE KEY UPDATE `dedicated` = '1'");
             return true;
         }
         if ($message->t != "MESSAGE_CREATE") {
