@@ -154,7 +154,7 @@ Now, let's get started with the interview! I am the Artificial Interviewer.  I a
                 'color' => 0x00ff00,
                 'fields' => [
                     [
-                        'name' => '**__Audit Date__**',
+                        'name' => '**__Last Audit Date__**',
                         'value' => $audit_date,
                         'inline' => true
                     ],
@@ -175,7 +175,7 @@ Now, let's get started with the interview! I am the Artificial Interviewer.  I a
                     'icon_url' => 'https://fairgrade.com/images/logo.png'
                 ],
                 'author' => [
-                    'name' => "**Independent Auditor: **$auditor_name",
+                    'name' => "Independent Auditor\n$auditor_name",
                     'url' => 'https://fairgrade.com',
                     'icon_url' => 'https://fairgrade.com/images/logo.png'
                 ]
