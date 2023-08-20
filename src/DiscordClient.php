@@ -222,7 +222,9 @@ These data points should be made publicly available on the employment section of
             The number of applicants or candidates, selection rates, scoring rates, and impact ratios for all categories. [Company Website](https://fairgrade.com/bias_audit)
             The distribution date of the AEDT. (Displayed Above)
             These data points should be made publicly available on the employment section of the employer or employment agency's website, in a clear and conspicuous manner. They may also be provided through other means such as job postings or email notifications.
-            You have the right to opt-out of using the AEDT if you prefer.  Please contact a human resources representative at [TSNYC Jobs](https://talentsolutions.nyc/jobs) to opt-out.");
+            You have the right to opt-out of using this AEDT if you prefer to human representative at [TSNYC Jobs](https://talentsolutions.nyc/jobs) to opt-out.");
+            $this->log_outgoing(Async\await($channel->sendMessage($builder)));
+            return true;
         }
         if ($message->t != "MESSAGE_CREATE") {
             return true; // Skip processing the message
