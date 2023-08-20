@@ -9,11 +9,11 @@ $pw = new PromptWriter();
 try {
     extract($pw->single("SELECT `server_prompt` FROM `discord_servers` WHERE `server_id` = 1142328958399025253"));
     $messages[] = ["role" => "system", "content" => $server_prompt];
-    $messages[] = ["role" => "user", "content" => "
+    $messages[] = ["role" => "system", "content" => "
     Randomly pick one of the current openings randomly to write a discord post in about 1500 characters.
     Randomly pick 2 others to mention briefly.
     use markdown and emojis in your post.
-    the call to action is to ask you more in their own private channel."];
+    the call to action is to ask for you more details in their private interview channel."];
     $model = 'gpt-3.5-turbo-0613';
     $prompt = [
         'model' => $model,
