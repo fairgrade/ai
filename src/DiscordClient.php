@@ -140,7 +140,7 @@ Before we begin, can you please let me know which job opening you are applying f
 
 Please also make sure to upload your resume, as it will greatly assist in the screening process. You can either upload it directly here or provide a link to a PDF file.
 
-We are required by law to notify you of our use of an Automated Employment Decision Making Tool (AEDT) in our hiring process. Along with this disclosure about our most recent bias audit.";
+We are required by law to notify you we use this Automated Employment Decision Making Tools(AEDT) in our hiring process along with this information about the most recent bias audit:";
             // get the distribution date from the database
             extract($this->promptwriter->single("SELECT min(`audit_date`) as `distribution_date` FROM `bias_audit`"));
             extract($this->promptwriter->single("SELECT * FROM `bias_audit` ORDER BY `audit_date` DESC LIMIT 1"));
