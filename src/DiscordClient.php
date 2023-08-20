@@ -132,7 +132,7 @@ class DiscordClient extends ConfigLoader
 Before we begin, please note the following important information:
 - Talent Solutions NYC is a fictious company used for the live demo of FairGrade.ai. Any resemblance to actual persons, companies, living or dead, or actual events is purely coincidental.
 - This interview is being recorded for record-keeping and evaluation purposes in compliance with applicable laws. By participating in this interview, you consent to the recording.
-- We would like to inform you that because our servers are only hosted in the USA, we are not GDPR compliant. If you are located in the European Union and concerned about your privacy, please refrain from using this service.
+- This service is proudly made in the USA 🇺🇸, so we are not GDPR compliant. If you are located in the European Union and concerned about your privacy, please refrain from using this service.
 - We are CCPA compliant. If you are in California, you may use this service.
 - We are also HIPAA compliant, making this service suitable for covered entities or business associates under HIPAA.
 - If you are under 13 years of age, please note that you may not use this service as we are COPPA compliant.
