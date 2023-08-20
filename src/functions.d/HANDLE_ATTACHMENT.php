@@ -107,6 +107,9 @@ Use markdown formatting to organize the information."];
     if (!isset($full_response) || $full_response == "") $full_response = "I'm sorry, but " . $e->getMessage() . "\n";
     else $full_response .= "\n\nAlso, I'm sorry, but " . $e->getMessage() . "\n";
 }
+// update file_translated in the db
+$full_response_sql = $this->promptwriter->escape($full_response);
+$this->promptwriter->query("UPDATE `attachments` SET `file_translated` = '$full_response_sql' WHERE `attachment_id` = '$attachment_id'");
 
 if (strlen($full_response)) $this->sendMessage($message, ["content" => $full_response . "\n\n=============\n\n✅ $file_name Analyzed! Please confirm the information is accurate and provide any information which is missing before continuing."]);
 unset($message["attachments"]);
