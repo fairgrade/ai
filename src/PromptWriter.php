@@ -166,7 +166,7 @@ class PromptWriter extends SqlClient
         $history = [];
         $total_history_tokens = 0;
         foreach ($message["history"] as $historic_message) {
-            if ($message["id"] == $historic_message["id"]) continue;
+            if ($message["id"] == $historic_message["message_id"]) continue;
             $historic_content = $historic_message["content"];
             $message_tokens = $this->token_count($historic_content);
             $total_history_tokens += $message_tokens;
