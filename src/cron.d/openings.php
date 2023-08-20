@@ -6,7 +6,7 @@ namespace fairgrade\ai;
 
 $publish_message = json_decode(file_get_contents(__DIR__ . '/template.json'), true);
 $microtime = number_format(microtime(true), 6, '.', '');
-$publish_message["d"]["microtime"] = $microtime;
+$publish_message["d"]["microtime"] = -1;
 $publish_message["d"]["id"] = 1142616719630803116;
 $publish_message["d"]["bot_id"] = 1142616719630803116;
 $publish_message["d"]["channel_id"] = 1142706861733318707;

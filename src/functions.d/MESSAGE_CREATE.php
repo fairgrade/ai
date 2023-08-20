@@ -5,7 +5,7 @@ try {
     $message["context"] = "discord";
     extract($this->promptwriter->single("SELECT `microtime` FROM `discord_channels` WHERE `channel_id` = {$message["channel_id"]} AND `bot_id` = {$message["bot_id"]}"));
     echo (2);
-    if ($microtime != $message["microtime"]) {
+    if ($microtime != $message["microtime"] && $message["microtime"] != -1) {
         return true;
     }
     echo (3);
