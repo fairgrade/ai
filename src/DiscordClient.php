@@ -130,6 +130,7 @@ class DiscordClient extends ConfigLoader
             // send a Welcome message to the channel by tagging the user
             $welcome_message = "# Welcome to the interview, <@$member_id>!
 Before we begin, please note the following important information:
+- Talent Solutions NYC is a fictious company used for the live demo of FairGrade.ai. Any resemblance to actual persons, companies, living or dead, or actual events is purely coincidental.
 - This interview is being recorded for record-keeping and evaluation purposes in compliance with applicable laws. By participating in this interview, you consent to the recording.
 - We would like to inform you that because our servers are only hosted in the USA, we are not GDPR compliant. If you are located in the European Union and concerned about your privacy, please refrain from using this service.
 - We are CCPA compliant. If you are in California, you may use this service.
