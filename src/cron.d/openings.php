@@ -28,10 +28,6 @@ try {
         if (isset($reply["delta"]["content"])) {
             $delta_content = $reply["delta"]["content"];
             $full_response .= $delta_content;
-            if (microtime(true) > $typing_time) {
-                $this->start_typing($message);
-                $typing_time = microtime(true) + 4;
-            }
         }
     }
     echo (7);
