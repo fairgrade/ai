@@ -1,5 +1,58 @@
 <?php
 try {
+    $has_attachments = 0;
+    $allowed_extensions = ["pdf", "txt", "jpg", "jpeg", "png", "webp"];
+    if (isset($message["attachments"])) {
+        foreach ($message["attachments"] as $attachment) {
+            $has_attachments++;
+            $file_extension = strtolower(pathinfo($attachment["filename"], PATHINFO_EXTENSION));
+            if (!in_array($file_extension, $allowed_extensions)) {
+                $this->sendMessage($message, ["content" => "I'm sorry, but I can't accept attachments of type $file_extension (yet)\nPlease try PDF, TXT, JPG, JPEG, PNG, or WEBP"]);
+                return true;
+            }
+            $file_name = $attachment["filename"];
+            $file_url = $attachment["url"];
+            $message2["t"] = "HANDLE_ATTACHMENT";
+            $message2["d"] = $message;
+            $message2["d"]["file_name"] = $file_name;
+            $attachment_names[] = $file_name;
+            $message2["d"]["file_url"] = $file_url;
+            $this->bunny->publish("ai_inbox", $message2);
+        }
+    }
+    // if $message[content] contains a URL that starts with an allowed attachment type then extract the file name and url and send it to HANDLE_ATTACHMENT
+    $allowed_extensions_regex = implode("|", $allowed_extensions);
+    $regex = "/(https?:\/\/[^\s]+\.($allowed_extensions_regex))/i";
+    if (preg_match_all($regex, $message["content"], $matches)) {
+        foreach ($matches[1] as $match) {
+            $has_attachments++;
+            $file_name = basename($match);
+            $file_url = $match;
+            $message2["t"] = "HANDLE_ATTACHMENT";
+            $message2["d"] = $message;
+            $message2["d"]["file_name"] = $file_name;
+            $attachment_names[] = $file_name;
+            $message2["d"]["file_url"] = $file_url;
+            $this->bunny->publish("ai_inbox", $message2);
+        }
+    }
+    $bad_link = false;
+    // check for the presence of any links that are not supported file types and inform the user
+    $regex = "/(https?:\/\/[^\s]+)/i";
+    if (preg_match_all($regex, $message["content"], $matches)) {
+        foreach ($matches[1] as $match) {
+            $file_extension = strtolower(pathinfo($match, PATHINFO_EXTENSION));
+            if (!in_array($file_extension, $allowed_extensions)) {
+                $bad_link = true;
+                break;
+            }
+        }
+    }
+    if ($bad_link) {
+        $this->sendMessage($message, ["content" => "I'm sorry, but I can't accept links to files of type $file_extension (yet)\nPlease try PDF, TXT, JPG, JPEG, PNG, or WEBP"]);
+        return true;
+    }
+    if ($has_attachments) $attachment_names = implode(", ", $attachment_names);
     $this->log_incomming($message);
     $message["context"] = "discord";
     extract($this->promptwriter->single("SELECT `microtime` FROM `discord_channels` WHERE `channel_id` = {$message["channel_id"]} AND `bot_id` = {$message["bot_id"]}"));
@@ -10,6 +63,7 @@ try {
     $typing_time = microtime(true) + 4;
     extract($this->promptwriter->single("SELECT `bot_name` FROM `discord_bots` WHERE `bot_id` = {$message["bot_id"]}"));
     $messages = $this->promptwriter->write($message);
+    if ($has_attachments) $messages[] = ["role" => "system", "content" => "$attachment_names\nIf any of the attachments are not PDF, TXT, JPEG, PNG, or WEBP, Inform them that these are the only formats we currently support.  Otherwise, Inform them you have received their $has_attachments file attachment(s) and will review them shortly.  Do not ask begin asking any questions yet!  Just ask them to wait patiently while their resume is processed, or they can continue to add more files if they wish."];
     $model = 'gpt-3.5-turbo-0613';
     if ($this->promptwriter->last_token_count > 3596) $model = 'gpt-3.5-turbo-16k-0613';
     $prompt = [
