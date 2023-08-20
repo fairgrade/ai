@@ -136,7 +136,7 @@ Before we begin, please note the following important information:
 
 Now, let's get started with the interview! I am the Artificial Interviewer, here to assist you.
 
-Please begin by uploading your resume in PDF format.";
+Please begin by uploading your resume in PDF, JPEG, PNG, or WebP format.";
             // get the distribution date from the database
             extract($this->promptwriter->single("SELECT min(`audit_date`) as `distribution_date` FROM `bias_audit`"));
             extract($this->promptwriter->single("SELECT * FROM `bias_audit` ORDER BY `audit_date` DESC LIMIT 1"));
