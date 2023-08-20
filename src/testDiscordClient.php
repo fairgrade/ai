@@ -7,7 +7,7 @@ require_once(__DIR__ . "/DiscordClient.php");
 require_once(__DIR__ . "/SqlClient.php");
 $sql = new SqlClient;
 
-$q = isset($argv[1]) ? $sql->escape($argv[1]) : 1111870294529941625;
+$q = isset($argv[1]) ? $sql->escape($argv[1]) : 1142616719630803116;
 $result = $sql->query("SELECT `bot_id`, `bot_token` FROM `discord_bots` WHERE `bot_name` LIKE '$q' OR `bot_id` = '$q'");
 if ($sql->count($result)) {
     extract($sql->assoc($result));
