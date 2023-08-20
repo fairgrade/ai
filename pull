@@ -1,4 +1,6 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 cd $DIR
+fairgrade stop
 git pull
 chown -R apache:apache .
+fairgrade start
