@@ -86,7 +86,7 @@ class PromptWriter extends SqlClient
                 $timestamp = strtotime($historic_message["timestamp"]);
                 $ts = date("H:i", $timestamp);
                 $historic_content = "[$ts] $historic_author: " . $historic_message["content"];
-                if ($historic_message["author"]["id"] == $message["bot_id"]) $history[$historic_message['id']] = ["role" => "assistant", "content" => $historic_content];
+                if (isset($historic_message["author"]["id"]) && $historic_message["author"]["id"] == $message["bot_id"]) $history[$historic_message['id']] = ["role" => "assistant", "content" => $historic_content];
                 else $history[$historic_message['id']] = ["role" => "user", "content" => $historic_content];
             }
             $result = $this->query("SELECT `message_id` as `history_message_id`,`microtime`,`content` as `sql_content`,`sender_id`,`token_count` FROM `web_context` WHERE (`sender_id` = '{$message["bot_id"]}' OR `receiver_ids` LIKE '%{$message["bot_id"]}%') AND `summary_complete` = 0 AND `discord` = '0' ORDER BY `message_id` DESC LIMIT 0,120");
@@ -119,8 +119,11 @@ class PromptWriter extends SqlClient
         $system_prompt .= "====================\n";
         if ($discord) {
             // Common Prompt
-            extract($this->single("SELECT `server_prompt` FROM `discord_servers` WHERE `server_id` = '{$message["guild_id"]}';"));
-            $system_prompt .= "\n3. building context/prompts: ```$server_prompt```\n";
+            $server_prompt = $this->single("SELECT `server_prompt` FROM `discord_servers` WHERE `server_id` = '{$message["guild_id"]}';");
+            if (!is_null($server_prompt)) {
+                extract($server_prompt);
+                $system_prompt .= "\n3. building context/prompts: ```$server_prompt```\n";
+            }
             // Channel Prompt
             $system_prompt .= "\n4. room context/prompts: ```{$message["channel_name"]}:\n{$message["channel_topic"]}\n```\n";
             extract($this->single("SELECT `prompt` as `channel_prompt` FROM `discord_channels` WHERE `channel_id` = '{$message["channel_id"]}' AND `bot_id` = '{$message["bot_id"]}';"));
