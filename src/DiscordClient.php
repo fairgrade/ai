@@ -63,14 +63,14 @@ class DiscordClient extends ConfigLoader
         }
         if ($message->t == "GUILD_CREATE") {
             $guild_id = $message->d->id;
-            $sql = "INSERT INTO `dc_bot2server` (`bot_id`, `server_id`) VALUES ('{$this->bot_id}', '{$guild_id}') ON DUPLICATE KEY UPDATE `server_id` = '{$guild_id}';";
+            $sql = "INSERT INTO `discord_bot2server` (`bot_id`, `server_id`) VALUES ('{$this->bot_id}', '{$guild_id}') ON DUPLICATE KEY UPDATE `server_id` = '{$guild_id}';";
             $sql .= "UPDATE `discord_servers` SET `server_avatar` = '{$message->d->icon}' WHERE `server_id` = '{$guild_id}';";
             $this->promptwriter->multi($sql);
             return true;
         }
         if ($message->t == "GUILD_DELETE") {
             $guild_id = $message->d->id;
-            $this->promptwriter->query("DELETE FROM `dc_bot2server` WHERE `bot_id` = '{$this->bot_id}' AND `server_id` = '{$guild_id}'");
+            $this->promptwriter->query("DELETE FROM `discord_bot2server` WHERE `bot_id` = '{$this->bot_id}' AND `server_id` = '{$guild_id}'");
             return true;
         }
         if ($message->t == "MESSAGE_DELETE") {
