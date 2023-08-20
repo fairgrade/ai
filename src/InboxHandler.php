@@ -22,8 +22,10 @@ class InboxHandler extends ConfigLoader
     private function process($message)
     {
         $this->promptwriter->query("SELECT 1");
-        if (file_exists(__DIR__ . "/functions.d/" . $message["t"] . ".php")) include(__DIR__ . "/functions.d/" . $message["t"] . ".php");
-        else echo ("No function found for " . $message["t"] . "\n");
+        $function = $message["t"];
+        $message = $message["d"];
+        if (file_exists(__DIR__ . "/functions.d/$function.php")) include(__DIR__ . "/functions.d/$function.php");
+        else echo ("No function found for $function\n");
         return true;
     }
 
