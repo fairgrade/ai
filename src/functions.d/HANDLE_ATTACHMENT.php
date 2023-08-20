@@ -112,6 +112,11 @@ if (strlen($full_response)) $this->sendMessage($message, ["content" => $full_res
 unset($message["attachments"]);
 $next_message["t"] = "MESSAGE_CREATE";
 $next_message["d"] = $message;
-$this->bunny->publish("ai_inbox", $message);
+$next_message["d"]["content"] = "✅ $file_name Analyzed!
+Please double check this for missing information and also look for currentjob openings which may match this candidate.
+If you find any, please send them to me so I can send them to the candidate.
+If you find any missing information, please ask the candidate for it and send it to me so I can update their profile.
+If you find any errors, please let me know so I can fix them.";
+$this->bunny->publish("ai_inbox", $next_message);
 sleep(2);
 return true;
