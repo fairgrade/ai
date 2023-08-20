@@ -134,11 +134,11 @@ Before we begin, please note the following important information:
 - We are an NYC AEDT-compliant service.
 - Please review this information carefully before proceeding.
 
-Now, let's get started with the interview! I am the Artificial Interviewer, here to assist you.
-
 The interview will take about 5 to 10 minutes to complete and you can take as much time as you need to answer each question.
 
-Please begin by uploading or providing a link to your resume in PDF, JPEG, PNG, or WebP format.";
+Before we begin, can you please let me know which job opening you are applying for? If you haven't decided yet, I can provide you with a list of our available positions.
+
+Please also make sure to upload your resume, as it will greatly assist in the screening process. You can either upload it directly here or provide a link to a PDF file.";
             // get the distribution date from the database
             extract($this->promptwriter->single("SELECT min(`audit_date`) as `distribution_date` FROM `bias_audit`"));
             extract($this->promptwriter->single("SELECT * FROM `bias_audit` ORDER BY `audit_date` DESC LIMIT 1"));
