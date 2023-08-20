@@ -179,7 +179,7 @@ Please also make sure to upload your resume, as it will greatly assist in the sc
                     'icon_url' => 'https://fairgrade.ai/images/logo.png'
                 ]
             ]));
-            $builder->setContent($welcome_message)
+            $builder->setContent($welcome_message);
             $this->log_outgoing(Async\await($channel->sendMessage($builder)));
 
             // get the channel id
