@@ -195,6 +195,10 @@ class DiscordClient extends ConfigLoader
             $builder = \Discord\Builders\MessageBuilder::new();
             $builder->setContent("We are FERPA compliant.  If you are a school or school district, you may use this service.");
             $this->log_outgoing(Async\await($channel->sendMessage($builder)));
+            // notice that we are an Equal Opportunity Employer
+            $builder = \Discord\Builders\MessageBuilder::new();
+            $builder->setContent("We are an Equal Opportunity Employer.");
+            $this->log_outgoing(Async\await($channel->sendMessage($builder)));
             /*
                 Summary of New York AEDT (Automatic Employment Decision Tool) Law
                 According to the AEDT laws, employers and employment agencies must convey the following data points to candidates for employment:
@@ -210,8 +214,8 @@ These data points should be made publicly available on the employment section of
             */
             // write an opening disclaimer that contains all of the above information about our duty to disclose the use of the AEDT in the hiring process
             $builder = \Discord\Builders\MessageBuilder::new();
-            $builder->setContent("We are AEDT compliant.  If you are in New York City, you may use this service.
-            According to the AEDT laws, employers and employment agencies must convey the following data points to candidates for employment:
+            $builder->setContent("This is an Automatic Employment Decision Tool (AEDT). Some areas have laws governing the use of AEDTs.  If you are in New York City, you may use this service.
+            According to the NYC AEDT laws, employers and employment agencies must convey the following data points to candidates for employment:
             Information about the date of the most recent bias audit of the AEDT and a summary of the results. (Displayed Above)
             The source and explanation of the data used to conduct the bias audit. [Company Website](https://fairgrade.com/bias_audit)
             The number of individuals assessed by the AEDT that fall within an unknown category. [Company Website](https://fairgrade.com/bias_audit)
