@@ -59,6 +59,8 @@ class DiscordClient extends ConfigLoader
         //print_r($message);
         if ($message->op == 11) {
             $this->promptwriter->query("SELECT 1");
+            $message = json_decode(json_encode($message), true);
+            $message["t"] = "HEARTBEAT";
             return $this->bunny->publish("ai_inbox", $message);
         }
         if ($message->t == "GUILD_CREATE") {
@@ -76,6 +78,99 @@ class DiscordClient extends ConfigLoader
         if ($message->t == "MESSAGE_DELETE") {
             $this->promptwriter->query("DELETE FROM `web_context` WHERE `message_id` = '{$message->d->id}'");
             return true;
+        }
+        // on new member joining server
+        if ($message->t == "GUILD_MEMBER_ADD") {
+            $guild_id = $message->d->guild_id;
+            $member_id = $message->d->user->id;
+            $member_name = $message->d->user->username;
+            $member_avatar = $message->d->user->avatar;
+            $member_discriminator = $message->d->user->discriminator;
+            $member_avatar_url = $this->promptwriter->escape($member_avatar);
+            $member_name = $this->promptwriter->escape($member_name);
+            $this->promptwriter->query("INSERT INTO discord_users
+                (discord_id, discord_username, discord_avatar, discord_discriminator)
+            VALUES
+                ('$member_id', '$member_name', '$member_avatar_url', '$member_discriminator')
+            ON DUPLICATE KEY UPDATE 
+                discord_username = VALUES(discord_username),
+                discord_avatar = VALUES(discord_avatar),
+                discord_discriminator = VALUES(discord_discriminator);");
+            // create the user their own private channel and set their username as the channel name and set the channel topic as "Artificial Interview with $member_name"
+            $channel_topic = "Artificial Interview with $member_name";
+            $channel_name = $member_name;
+            // create the channel in discord
+            $channel = Async\await($this->discord->guilds[$guild_id]->createChannel($channel_name, "text", [
+                'topic' => $channel_topic,
+                'permission_overwrites' => [
+                    [
+                        'id' => $member_id,
+                        'type' => 'member',
+                        'allow' => 1024,
+                        'deny' => 0
+                    ],
+                    [
+                        'id' => $this->bot_id,
+                        'type' => 'member',
+                        'allow' => 1024,
+                        'deny' => 0
+                    ],
+                    [
+                        'id' => $guild_id,
+                        'type' => 'role',
+                        'allow' => 0,
+                        'deny' => 1024
+                    ]
+                ]
+            ]));
+            // send a Welcome message to the channel by tagging the user
+            $welcome_message = "Welcome <@$member_id> to the Artificial Interview Discord Server!  I am the Artificial Interviewer.  I am here to help you with your interview.";
+            $this->log_outgoing(Async\await($channel->sendMessage($welcome_message)));
+            // get the distribution date from the database
+            extract($this->promptwriter->single("SELECT min(`audit_date`) as `distribution_date` FROM `bias_audit`"));
+            extract($this->promptwriter->single("SELECT * FROM `bias_audit` ORDER BY `audit_date` DESC LIMIT 1"));
+            // send a message to the channel with the distribution date
+            // use the builder function to create an embed message
+            $builder = \Discord\Builders\MessageBuilder::new();
+            $builder->addEmbed(new \Discord\Parts\Embed\Embed($this->discord, [
+                'title' => 'Bias Audit',
+                'description' => "AEDT Distribution Date: $distribution_date",
+                'url' => 'https://fairgrade.ai/bias_audit',
+                'color' => 0x00ff00,
+                'fields' => [
+                    [
+                        'name' => '**__Audit Date__**',
+                        'value' => $audit_date,
+                        'inline' => true
+                    ],
+                    [
+                        'name' => '**__Auditor__**',
+                        'value' => $auditor_name,
+                        'inline' => true
+                    ],
+                    [
+                        'name' => '**__Results__**',
+                        'value' => $audit_results,
+                        'inline' => true
+                    ]
+                ],
+                'thumbnail' => [
+                    'url' => 'https://fairgrade.com/images/logo.png'
+                ],
+                'image' => [
+                    'url' => 'https://fairgrade.com/images/logo.png'
+                ],
+                'footer' => [
+                    'text' => 'Footer Text',
+                    'icon_url' => 'https://fairgrade.com/images/logo.png'
+                ],
+                'author' => [
+                    'name' => 'Author Name',
+                    'url' => 'https://fairgrade.com',
+                    'icon_url' => 'https://fairgrade.com/images/logo.png'
+                ]
+            ]));
+            $this->log_outgoing(Async\await($channel->sendMessage($builder)));
         }
         if ($message->t != "MESSAGE_CREATE") {
             return true; // Skip processing the message
