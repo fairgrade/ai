@@ -171,7 +171,7 @@ Now, let's get started with the interview! I am the Artificial Interviewer.  I a
                     'url' => 'https://fairgrade.ai/images/logo.png'
                 ],
                 'footer' => [
-                    'text' => 'Footer Text',
+                    'text' => 'Powered by FairGrade.ai',
                     'icon_url' => 'https://fairgrade.ai/images/logo.png'
                 ],
                 'author' => [
