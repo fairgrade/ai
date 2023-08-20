@@ -81,6 +81,7 @@ class DiscordClient extends ConfigLoader
         }
         // on new member joining server
         if ($message->t == "GUILD_MEMBER_ADD") {
+            $guild = $discord->guilds[$message->d->guild_id];
             $guild_id = $message->d->guild_id;
             $member_id = $message->d->user->id;
             $member_name = $message->d->user->username;
@@ -100,7 +101,8 @@ class DiscordClient extends ConfigLoader
             $channel_topic = "Artificial Interview with $member_name";
             $channel_name = $member_name;
             // create the channel in discord
-            $channel = Async\await($this->discord->guilds[$guild_id]->createChannel($channel_name, "text", [
+            $channel = $guild->channels->create([
+                'name' => $channel_name,
                 'topic' => $channel_topic,
                 'permission_overwrites' => [
                     [
@@ -122,7 +124,8 @@ class DiscordClient extends ConfigLoader
                         'deny' => 1024
                     ]
                 ]
-            ]));
+            ]);
+            $guild->channels->save($channel);
             // send a Welcome message to the channel by tagging the user
             $welcome_message = "Welcome <@$member_id> to the Artificial Interview Discord Server!  I am the Artificial Interviewer.  I am here to help you with your interview.";
             // get the distribution date from the database
