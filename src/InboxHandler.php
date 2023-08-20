@@ -21,7 +21,6 @@ class InboxHandler extends ConfigLoader
 
     private function process($message)
     {
-        echo ("Processing " . print_r($message, true) . "\n");
         $this->promptwriter->query("SELECT 1");
         try {
             $this->log_incomming($message);
