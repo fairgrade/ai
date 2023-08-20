@@ -137,7 +137,7 @@ Before we begin, please note the following important information:
 - If you are under 13 years of age, please note that you may not use this service as we are COPPA compliant.
 - For schools or school districts, we are FERPA compliant, ensuring the privacy and security of educational records.
 - We are committed to equal opportunity employment.
-- Lastly, this interview is conducted using an Automatic Employment Decision Tool (AEDT). If you are in New York City, you may use this service in accordance with the NYC AEDT laws.
+- Lastly, this interview is conducted using an Automated Employment Decision Tool (AEDT). If you are in New York City, you may use this service in accordance with the NYC AEDT laws.
 Please review this information carefully before proceeding with the interview. If you have any questions or concerns, feel free to let us know. We value transparency and aim to provide a fair and compliant hiring process. 
 
 Now, let's get started with the interview! I am the Artificial Interviewer.  I am here to help you with your interview.  Please begin by uploading or sending a link to your resume in PDF, DOCX, or TXT or just start by introducing yourself or asking any questions you may have. Let's start with your full name and what do you prefer to be called?";
