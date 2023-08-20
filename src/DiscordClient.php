@@ -165,19 +165,19 @@ Now, let's get started with the interview! I am the Artificial Interviewer.  I a
                     ]
                 ],
                 'thumbnail' => [
-                    'url' => 'https://fairgrade.com/images/logo.png'
+                    'url' => 'https://fairgrade.ai/images/logo.png'
                 ],
                 'image' => [
-                    'url' => 'https://fairgrade.com/images/logo.png'
+                    'url' => 'https://fairgrade.ai/images/logo.png'
                 ],
                 'footer' => [
                     'text' => 'Footer Text',
-                    'icon_url' => 'https://fairgrade.com/images/logo.png'
+                    'icon_url' => 'https://fairgrade.ai/images/logo.png'
                 ],
                 'author' => [
-                    'name' => "Independent Auditor\n$auditor_name",
-                    'url' => 'https://fairgrade.com',
-                    'icon_url' => 'https://fairgrade.com/images/logo.png'
+                    'name' => "Independently Audited By:\n$auditor_name",
+                    'url' => 'https://example.com',
+                    'icon_url' => 'https://fairgrade.ai/images/logo.png'
                 ]
             ]));
             $this->log_outgoing(Async\await($channel->sendMessage($builder)));
