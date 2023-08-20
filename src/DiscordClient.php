@@ -186,7 +186,8 @@ Now, let's get started with the interview! I am the Artificial Interviewer.  I a
             // get the channel id
             $channel_id = $channel->id;
             // insert the channel id into the database
-            $this->promptwriter->query("INSERT INTO `discord_channels` (`channel_id`, `bot_id`, `dedicated`) VALUES ('$channel_id', '{$this->bot_id}', '1') ON DUPLICATE KEY UPDATE `dedicated` = '1'");
+            $microtime = number_format(microtime(true), 6, '.', '');
+            $this->promptwriter->query("INSERT INTO `discord_channels` (`channel_id`, `bot_id`, `dedicated`, `microtime`) VALUES ('$channel_id', '{$this->bot_id}', '1', '$microtime') ON DUPLICATE KEY UPDATE `dedicated` = '1'");
             return true;
         }
         if ($message->t != "MESSAGE_CREATE") {
