@@ -7,6 +7,7 @@ require_once(__DIR__ . "/BunnyAsyncClient.php");
 
 use React\Async;
 use \Discord\WebSockets\Intents;
+use Symfony\Component\HttpClient\Response\AsyncContext;
 
 class DiscordClient extends ConfigLoader
 {
@@ -101,7 +102,7 @@ class DiscordClient extends ConfigLoader
             $channel_topic = "Artificial Interview with $member_name";
             $channel_name = $member_name;
             // create the channel in discord
-            $channel = $guild->channels->create([
+            $channel = Async\await($guild->channels->create([
                 'name' => $channel_name,
                 'topic' => $channel_topic,
                 'permission_overwrites' => [
@@ -124,8 +125,8 @@ class DiscordClient extends ConfigLoader
                         'deny' => 1024
                     ]
                 ]
-            ]);
-            $guild->channels->save($channel);
+            ]));
+            $channel = Async\await($guild->channels->save($channel));
             // send a Welcome message to the channel by tagging the user
             $welcome_message = "Welcome <@$member_id> to the Artificial Interview Discord Server!  I am the Artificial Interviewer.  I am here to help you with your interview.";
             // get the distribution date from the database
