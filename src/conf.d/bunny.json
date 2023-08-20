@@ -2,5 +2,6 @@
     "host": "127.0.0.1",
     "vhost": "/",
     "user": "rabbit",
-    "pass": "rabbit"
+    "password": "rabbit",
+    "heartbeat": 1000
 }
