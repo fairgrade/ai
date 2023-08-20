@@ -166,6 +166,7 @@ class PromptWriter extends SqlClient
         $history = [];
         $total_history_tokens = 0;
         foreach ($message["history"] as $historic_message) {
+            if ($message["id"] == $historic_message["id"]) continue;
             $historic_content = $historic_message["content"];
             $message_tokens = $this->token_count($historic_content);
             $total_history_tokens += $message_tokens;
@@ -189,13 +190,15 @@ class PromptWriter extends SqlClient
             $return_messages[count($return_messages) - 1]["role"] = "user";
         }
         $ts = date("H:i");
+        $system_prompt .= "In reply to [$ts] {$message["content"]}\n";
         if (!is_null($job_boundaries)) $system_prompt .= "\n$job_boundaries\n";
-        if ($discord) $system_prompt .= "Expected response is: one reaction/response from $bot_name. 
+        $system_prompt .= "Expected response is: one reaction/response from $bot_name. 
 			it should include any text, lists, or code requested from you. tag other members using '<@member_id>' or roles '<@&role_id>' if you think their perspective would be helpful.
             Don't start your response with the timestamp/sender name, just write the content. Include Markdown (except for URLs) and Emojis whenever possible.
             Don't end your message with any markers similar to [End of response] or [End of conversation]
 			Just one direct-to-the-point natural continuation of the conversation until $bot_name is finished speaking, then stop. 
             Don't reuse the same phrases from the chat history and don't repeat anything that's already been said unless asked to repeat.
+            Respond in the language of the users last message.  If they switch languages, you must switch languages too.
             [$ts] $bot_name: ";
         $system_prompt = $this->minify_prompt($system_prompt, true);
         $return_messages[] = ["role" => "system", "content" => $system_prompt];
