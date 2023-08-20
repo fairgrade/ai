@@ -129,20 +129,14 @@ class DiscordClient extends ConfigLoader
             // send a Welcome message to the channel by tagging the user
             $welcome_message = "# Welcome to the interview, <@$member_id>!
 Before we begin, please note the following important information:
-- Talent Solutions NYC is a fictious company used for the live demo of FairGrade.ai. Any resemblance to actual persons, companies, living or dead, or actual events is purely coincidental.
-- This interview is being recorded for record-keeping and evaluation purposes in compliance with applicable laws. By participating in this interview, you consent to the recording.
-- This service is proudly made in the USA 🇺🇸, so we are not GDPR compliant. If you are located in the European Union and concerned about your privacy, please refrain from using this service.
-- We are CCPA compliant. If you are in California, you may use this service.
-- We are also HIPAA compliant, making this service suitable for covered entities or business associates under HIPAA.
-- If you are under 13 years of age, please note that you may not use this service as we are COPPA compliant.
-- For schools or school districts, we are FERPA compliant, ensuring the privacy and security of educational records.
-- We are committed to equal opportunity employment.
-- Lastly, this interview is conducted using an Automated Employment Decision Tool (AEDT). If you are in New York City, you may use this service in accordance with the NYC AEDT laws.
-Please review this information carefully before proceeding with the interview. If you have any questions or concerns, feel free to let us know. We value transparency and aim to provide a fair and compliant hiring process. 
+- This interview is being recorded for record-keeping and evaluation purposes.
+- By participating, you consent to the recording.
+- We are an NYC AEDT-compliant service.
+- Please review this information carefully before proceeding.
 
-Now, let's get started with the interview! I am the Artificial Interviewer.  I am here to help you with your interview.
+Now, let's get started with the interview! I am the Artificial Interviewer, here to assist you.
 
-Please begin by uploading or sending a link to your resume in PDF Format.";
+Please begin by uploading your resume in PDF format.";
             // get the distribution date from the database
             extract($this->promptwriter->single("SELECT min(`audit_date`) as `distribution_date` FROM `bias_audit`"));
             extract($this->promptwriter->single("SELECT * FROM `bias_audit` ORDER BY `audit_date` DESC LIMIT 1"));
