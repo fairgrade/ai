@@ -38,7 +38,6 @@ unlink($random_file_path);
 if ($file_extension == "pdf") {
     echo ("PDF");
     $text = shell_exec("pdftotext -layout {$stored_path} -");
-    return true;
 } else {
     echo ("IMG");
     $text = shell_exec("tesseract {$stored_path} stdout");
