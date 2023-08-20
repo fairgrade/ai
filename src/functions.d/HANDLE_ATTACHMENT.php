@@ -5,7 +5,7 @@ $user_id = $message["author"]["id"];
 $file_name = $message["file_name"];
 $file_url = $message["file_url"];
 $file_extension = strtolower(substr($file_name, strrpos($file_name, ".") + 1));
-$random_file_name = $discord_id . "_" . md5($file_name) . "." . $file_extension;
+$random_file_name = $user_id . "_" . md5($file_name) . "." . $file_extension;
 $random_file_path = $uploads_inbox . "/" . $random_file_name;
 if (!file_exists($uploads_inbox)) mkdir($uploads_inbox);
 if (file_exists($random_file_path)) unlink($random_file_path);
