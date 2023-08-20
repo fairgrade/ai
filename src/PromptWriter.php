@@ -166,7 +166,6 @@ class PromptWriter extends SqlClient
         $history = [];
         $total_history_tokens = 0;
         foreach ($message["history"] as $historic_message) {
-            if ($message["id"] == $historic_message["message_id"]) continue;
             $historic_content = $historic_message["content"];
             $message_tokens = $this->token_count($historic_content);
             $total_history_tokens += $message_tokens;
@@ -190,7 +189,6 @@ class PromptWriter extends SqlClient
             $return_messages[count($return_messages) - 1]["role"] = "user";
         }
         $ts = date("H:i");
-        $system_prompt .= "In reply to [$ts] {$message["content"]}\n";
         if (!is_null($job_boundaries)) $system_prompt .= "\n$job_boundaries\n";
         $system_prompt .= "Expected response is: one reaction/response from $bot_name. 
 			it should include any text, lists, or code requested from you. tag other members using '<@member_id>' or roles '<@&role_id>' if you think their perspective would be helpful.
