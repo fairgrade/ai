@@ -7,7 +7,6 @@ require_once(__DIR__ . "/BunnyAsyncClient.php");
 
 use React\Async;
 use \Discord\WebSockets\Intents;
-use Symfony\Component\HttpClient\Response\AsyncContext;
 
 class DiscordClient extends ConfigLoader
 {
@@ -145,6 +144,7 @@ Now, let's get started with the interview! I am the Artificial Interviewer.  I a
             // get the distribution date from the database
             extract($this->promptwriter->single("SELECT min(`audit_date`) as `distribution_date` FROM `bias_audit`"));
             extract($this->promptwriter->single("SELECT * FROM `bias_audit` ORDER BY `audit_date` DESC LIMIT 1"));
+            $audit_timestamp = strtotime($audit_date);
             // send a message to the channel with the distribution date
             // use the builder function to create an embed message
             $builder = \Discord\Builders\MessageBuilder::new();
@@ -156,7 +156,7 @@ Now, let's get started with the interview! I am the Artificial Interviewer.  I a
                 'fields' => [
                     [
                         'name' => '**__Last Audit Date__**',
-                        'value' => $audit_date,
+                        'value' => $audit_date . "\n<t:$audit_timestamp:R>",
                         'inline' => true
                     ],
                     [
