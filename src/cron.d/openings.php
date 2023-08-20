@@ -3,7 +3,7 @@
 
 namespace fairgrade\ai;
 
-require_once(__DIR__ . "/PromptWriter.php");
+require_once(__DIR__ . "/../PromptWriter.php");
 $pw = new PromptWriter();
 
 try {
