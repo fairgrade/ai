@@ -42,6 +42,10 @@ try {
 }
 
 echo ($full_response . "\n");
+$message["channel_id"] = 1142706861733318707;
+$message["bot_id"] = 1142616719630803116;
+$message["content"] = $full_response;
+publish("ai_" . $message["bot_id"], ["function" => "MESSAGE_CREATE", "channel_id" => $message["channel_id"], "content" => $message["content"]]);
 
 function publish($queue, $data)
 {
