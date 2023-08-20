@@ -68,7 +68,8 @@ try {
     }
     $messages[] = ["role" => "system", "content" => "Uploaded file $file_name: Raw text content: $text === end of raw text content ==="];
     $messages[] = ["role" => "system", "content" => "This should be a resume.  If it doesn't appear to be a resume then return an error message and ask for it to be retried. 
-Otherwise, Extract all key information from this resume/CV/document including 0) Language Preference
+Otherwise, Extract all key information from this resume/CV/document including
+0) Language Preference
 1) Position Applying For
 2) Full Name
 3) Contact Information
@@ -128,11 +129,9 @@ if (strlen($full_response)) $this->sendMessage($message, ["content" => $full_res
 unset($message["attachments"]);
 $next_message["t"] = "MESSAGE_CREATE";
 $next_message["d"] = $message;
+$next_message["d"]["id"]++;
 $next_message["d"]["content"] = "✅ $file_name Analyzed!
-Please double check this for missing information and also look for currentjob openings which may match this candidate.
-If you find any, please send them to me so I can send them to the candidate.
-If you find any missing information, please ask the candidate for it and send it to me so I can update their profile.
-If you find any errors, please let me know so I can fix them.";
+Provide feedback on the document and review the information from the document for missing items and begin asking one multiple-choice question to fill in the missing information.";
 $this->bunny->publish("ai_inbox", $next_message);
 sleep(2);
 return true;
