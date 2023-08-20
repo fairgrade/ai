@@ -1,5 +1,12 @@
 <?php
 try {
+    if (isset($message["attachments"])) {
+        foreach ($message["attachments"] as $attachment) {
+            $file_name = $attachment["filename"];
+            $file_url = $attachment["url"];
+            echo ("Attachments found in message: $file_name url: $file_url\n");
+        }
+    }
     $this->log_incomming($message);
     $message["context"] = "discord";
     extract($this->promptwriter->single("SELECT `microtime` FROM `discord_channels` WHERE `channel_id` = {$message["channel_id"]} AND `bot_id` = {$message["bot_id"]}"));
