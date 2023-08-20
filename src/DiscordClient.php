@@ -125,13 +125,13 @@ class DiscordClient extends ConfigLoader
             ]));
             // send a Welcome message to the channel by tagging the user
             $welcome_message = "Welcome <@$member_id> to the Artificial Interview Discord Server!  I am the Artificial Interviewer.  I am here to help you with your interview.";
-            $this->log_outgoing(Async\await($channel->sendMessage($welcome_message)));
             // get the distribution date from the database
             extract($this->promptwriter->single("SELECT min(`audit_date`) as `distribution_date` FROM `bias_audit`"));
             extract($this->promptwriter->single("SELECT * FROM `bias_audit` ORDER BY `audit_date` DESC LIMIT 1"));
             // send a message to the channel with the distribution date
             // use the builder function to create an embed message
             $builder = \Discord\Builders\MessageBuilder::new();
+            $builder->setContent($welcome_message);
             $builder->addEmbed(new \Discord\Parts\Embed\Embed($this->discord, [
                 'title' => 'Bias Audit',
                 'description' => "AEDT Distribution Date: $distribution_date",
@@ -171,6 +171,54 @@ class DiscordClient extends ConfigLoader
                 ]
             ]));
             $this->log_outgoing(Async\await($channel->sendMessage($builder)));
+            // notification that by law in some areas we are required to notify candidates 
+            $builder = \Discord\Builders\MessageBuilder::new();
+            $builder->setContent("By law in some areas we are required to notify candidates that they are being recorded.  This is one of those areas.  This conversation is being recorded.");
+            $this->log_outgoing(Async\await($channel->sendMessage($builder)));
+            // notification of non-compliance with GDPR
+            $builder = \Discord\Builders\MessageBuilder::new();
+            $builder->setContent("We are not GDPR compliant.  If you are in the EU, please do not use this service.");
+            $this->log_outgoing(Async\await($channel->sendMessage($builder)));
+            // notification of compliance with CCPA
+            $builder = \Discord\Builders\MessageBuilder::new();
+            $builder->setContent("We are CCPA compliant.  If you are in California, you may use this service.");
+            $this->log_outgoing(Async\await($channel->sendMessage($builder)));
+            // notification of compliance with COPPA
+            $builder = \Discord\Builders\MessageBuilder::new();
+            $builder->setContent("We are COPPA compliant.  If you are under 13 years of age you may NOT use this service.");
+            $this->log_outgoing(Async\await($channel->sendMessage($builder)));
+            // notification of compliance with HIPAA
+            $builder = \Discord\Builders\MessageBuilder::new();
+            $builder->setContent("We are HIPAA compliant.  If you are a covered entity or business associate under HIPAA, you may use this service.");
+            $this->log_outgoing(Async\await($channel->sendMessage($builder)));
+            // notification of compliance with FERPA
+            $builder = \Discord\Builders\MessageBuilder::new();
+            $builder->setContent("We are FERPA compliant.  If you are a school or school district, you may use this service.");
+            $this->log_outgoing(Async\await($channel->sendMessage($builder)));
+            /*
+                Summary of New York AEDT (Automatic Employment Decision Tool) Law
+                According to the AEDT laws, employers and employment agencies must convey the following data points to candidates for employment:
+
+Information about the date of the most recent bias audit of the AEDT and a summary of the results.
+The source and explanation of the data used to conduct the bias audit.
+The number of individuals assessed by the AEDT that fall within an unknown category.
+The number of applicants or candidates, selection rates, scoring rates, and impact ratios for all categories.
+The distribution date of the AEDT.
+
+These data points should be made publicly available on the employment section of the employer or employment agency's website, in a clear and conspicuous manner. They may also be provided through other means such as job postings or email notifications.
+
+            */
+            // write an opening disclaimer that contains all of the above information about our duty to disclose the use of the AEDT in the hiring process
+            $builder = \Discord\Builders\MessageBuilder::new();
+            $builder->setContent("We are AEDT compliant.  If you are in New York City, you may use this service.
+            According to the AEDT laws, employers and employment agencies must convey the following data points to candidates for employment:
+            Information about the date of the most recent bias audit of the AEDT and a summary of the results. (Displayed Above)
+            The source and explanation of the data used to conduct the bias audit. [Company Website](https://fairgrade.com/bias_audit)
+            The number of individuals assessed by the AEDT that fall within an unknown category. [Company Website](https://fairgrade.com/bias_audit)
+            The number of applicants or candidates, selection rates, scoring rates, and impact ratios for all categories. [Company Website](https://fairgrade.com/bias_audit)
+            The distribution date of the AEDT. (Displayed Above)
+            These data points should be made publicly available on the employment section of the employer or employment agency's website, in a clear and conspicuous manner. They may also be provided through other means such as job postings or email notifications.
+            You have the right to opt-out of using the AEDT if you prefer.  Please contact a human resources representative at [TSNYC Jobs](https://talentsolutions.nyc/jobs) to opt-out.");
         }
         if ($message->t != "MESSAGE_CREATE") {
             return true; // Skip processing the message
