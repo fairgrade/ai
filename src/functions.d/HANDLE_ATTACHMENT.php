@@ -68,8 +68,21 @@ try {
     }
     $messages[] = ["role" => "system", "content" => "Uploaded file $file_name: Raw text content: $text === end of raw text content ==="];
     $messages[] = ["role" => "system", "content" => "This should be a resume.  If it doesn't appear to be a resume then return an error message and ask for it to be retried. 
-Otherwise, Extract all key information from this resume/CV/document including full name,
-contact information, education, work experience, skills, and any other information that may be useful.
+Otherwise, Extract all key information from this resume/CV/document including 0) Language Preference
+1) Position Applying For
+2) Full Name
+3) Contact Information
+4) Location
+5) Education
+6) Most Recent Job
+7) Past Job Experience
+8) Skills
+9) Availability
+10) Seeking W2 or 1099
+11) Salary or Hourly expectations
+12) References (if available)
+13) Work Authorization (immigrant/visa status)
+14) Availability for additional rounds of interviews or any required assessments.
 If you are unsure if something is useful, include it anyway. Do not make up any information.  If it's not included in the docuement flag it as missing.
 If any important information is missing please point that out and request it.
 Write as long as you need to capture all the details.
