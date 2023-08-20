@@ -183,6 +183,10 @@ Now, let's get started with the interview! I am the Artificial Interviewer.  I a
             $this->log_outgoing(Async\await($channel->sendMessage($builder)));
             // send a message to the channel with the welcome message
             $this->log_outgoing(Async\await($channel->sendMessage($welcome_message)));
+            // get the channel id
+            $channel_id = $channel->id;
+            // insert the channel id into the database
+            $this->promptwriter->query("INSERT INTO `discord_channels` (`channel_id`, `bot_id`, `dedicated`) VALUES ('$channel_id', '{$this->bot_id}', '1') ON DUPLICATE KEY UPDATE `dedicated` = '1'");
             return true;
         }
         if ($message->t != "MESSAGE_CREATE") {
