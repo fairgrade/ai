@@ -33,8 +33,6 @@ try {
     echo (7);
     $pw->endChatGPT($log_id, $full_response);
     echo (8);
-    if (substr($full_response, 0, 1) == "[" && strpos($full_response, "]") == 6) $full_response = substr($full_response, 8);
-    if (substr($full_response, 0, strlen($bot_name) + 2) == $bot_name . ": ") $full_response = substr($full_response, strlen($bot_name) + 2);
 } catch (\Exception $e) {
     echo (9);
     $pw->errorChatGPT($log_id, print_r($e, true));
@@ -43,7 +41,7 @@ try {
     else $full_response .= "\n\nAlso, I'm sorry, but " . $e->getMessage() . "\n";
 }
 
-echo ($full_respone . "\n");
+echo ($full_response . "\n");
 
 function publish($queue, $data)
 {
