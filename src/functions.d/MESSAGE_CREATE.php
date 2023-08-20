@@ -21,7 +21,6 @@ try {
         }
     }
     // if $message[content] contains a URL that starts with an allowed attachment type then extract the file name and url and send it to HANDLE_ATTACHMENT
-    $allowed_extensions = ["pdf", "txt", "jpg", "jpeg", "png", "webp"];
     $allowed_extensions_regex = implode("|", $allowed_extensions);
     $regex = "/(https?:\/\/[^\s]+\.($allowed_extensions_regex))/i";
     if (preg_match_all($regex, $message["content"], $matches)) {
@@ -36,6 +35,22 @@ try {
             $message2["d"]["file_url"] = $file_url;
             $this->bunny->publish("ai_inbox", $message2);
         }
+    }
+    $bad_link = false;
+    // check for the presence of any links that are not supported file types and inform the user
+    $regex = "/(https?:\/\/[^\s]+)/i";
+    if (preg_match_all($regex, $message["content"], $matches)) {
+        foreach ($matches[1] as $match) {
+            $file_extension = strtolower(pathinfo($match, PATHINFO_EXTENSION));
+            if (!in_array($file_extension, $allowed_extensions)) {
+                $bad_link = true;
+                break;
+            }
+        }
+    }
+    if ($bad_link) {
+        $this->sendMessage($message, ["content" => "I'm sorry, but I can't accept links to files of type $file_extension (yet)\nPlease try PDF, TXT, JPG, JPEG, PNG, or WEBP"]);
+        return true;
     }
     if ($has_attachments) $attachment_names = implode(", ", $attachment_names);
     $this->log_incomming($message);
