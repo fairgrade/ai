@@ -15,10 +15,12 @@ try {
             $message2["t"] = "HANDLE_ATTACHMENT";
             $message2["d"] = $message;
             $message2["d"]["file_name"] = $file_name;
+            $attachment_names[] = $file_name;
             $message2["d"]["file_url"] = $file_url;
             $this->bunny->publish("ai_inbox", $message2);
         }
     }
+    if ($has_attachments) $attachment_names = implode(", ", $attachment_names);
     $this->log_incomming($message);
     $message["context"] = "discord";
     extract($this->promptwriter->single("SELECT `microtime` FROM `discord_channels` WHERE `channel_id` = {$message["channel_id"]} AND `bot_id` = {$message["bot_id"]}"));
@@ -29,7 +31,7 @@ try {
     $typing_time = microtime(true) + 4;
     extract($this->promptwriter->single("SELECT `bot_name` FROM `discord_bots` WHERE `bot_id` = {$message["bot_id"]}"));
     $messages = $this->promptwriter->write($message);
-    if ($has_attachments) $messages[] = ["role" => "system", "content" => "Inform them you have received their $has_attachments and will review them shortly."];
+    if ($has_attachments) $messages[] = ["role" => "system", "content" => "$attachment_names\nIf any of the attachments are not PDF, TXT, JPEG, PNG, or WEBP, Inform them that these are the only formats we currently support.  Otherwise, Inform them you have received their $has_attachments file attachment(s) and will review them shortly."];
     $model = 'gpt-3.5-turbo-0613';
     if ($this->promptwriter->last_token_count > 3596) $model = 'gpt-3.5-turbo-16k-0613';
     $prompt = [
