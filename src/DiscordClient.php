@@ -140,7 +140,9 @@ Before we begin, please note the following important information:
 - Lastly, this interview is conducted using an Automated Employment Decision Tool (AEDT). If you are in New York City, you may use this service in accordance with the NYC AEDT laws.
 Please review this information carefully before proceeding with the interview. If you have any questions or concerns, feel free to let us know. We value transparency and aim to provide a fair and compliant hiring process. 
 
-Now, let's get started with the interview! I am the Artificial Interviewer.  I am here to help you with your interview.  Please begin by uploading or sending a link to your resume in PDF, DOCX, or TXT or just start by introducing yourself or asking any questions you may have. Let's start with your full name and what do you prefer to be called?";
+Now, let's get started with the interview! I am the Artificial Interviewer.  I am here to help you with your interview.
+
+Please begin by uploading or sending a link to your resume in PDF Format.";
             // get the distribution date from the database
             extract($this->promptwriter->single("SELECT min(`audit_date`) as `distribution_date` FROM `bias_audit`"));
             extract($this->promptwriter->single("SELECT * FROM `bias_audit` ORDER BY `audit_date` DESC LIMIT 1"));
