@@ -34,8 +34,8 @@ class ProcessManager
         $ps = array();
         $ps2 = array();
         $ps3 = array();
-        exec("ps aux | grep \"ai wrapper\"", $ps);
-        exec("ps aux | grep \"ai main\"", $ps);
+        exec("ps aux | grep \"fairgrade wrapper\"", $ps);
+        exec("ps aux | grep \"fairgrade main\"", $ps);
         foreach ($ps as $line) if (!strpos($line, "grep")) $ps2[] = $line;
         foreach ($ps2 as $line) {
             $line = $this->replace("  ", " ", $line);
@@ -54,16 +54,16 @@ class ProcessManager
     private function status()
     {
         $pids = $this->getPids();
-        if (sizeof($pids) === 2) echo ("ai is running... (pids " . implode(" ", $pids) . ")\n");
-        elseif (sizeof($pids)) echo ("WARNING; ai is HALF running... (pids " . implode(" ", $pids) . ")\n");
-        else echo ("ai is stopped.\n");
+        if (sizeof($pids) === 2) echo ("fairgrade is running... (pids " . implode(" ", $pids) . ")\n");
+        elseif (sizeof($pids)) echo ("WARNING; fairgrade is HALF running... (pids " . implode(" ", $pids) . ")\n");
+        else echo ("fairgrade is stopped.\n");
     }
 
     private function start()
     {
         $pids = $this->getPids();
-        if (sizeof($pids)) die("ERROR: ai is already running.  Not starting.\n");
-        exec("nohup ai wrapper </dev/null >> " . __DIR__ . "/logs.d/wrapper.log 2>&1 &");
+        if (sizeof($pids)) die("ERROR: fairgrade is already running.  Not starting.\n");
+        exec("nohup fairgrade wrapper </dev/null >> " . __DIR__ . "/logs.d/wrapper.log 2>&1 &");
         usleep(10000);
         $this->status();
     }
@@ -92,7 +92,7 @@ class ProcessManager
     private function wrapper()
     {
         while (true) {
-            passthru("ai main");
+            passthru("fairgrade main");
             sleep(1);
         }
     }
