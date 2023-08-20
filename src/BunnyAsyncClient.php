@@ -50,7 +50,7 @@ class BunnyAsyncClient extends ConfigLoader
             1 => array("pipe", "w"),
             2 => array("pipe", "w")
         );
-        $process = proc_open(__DIR__ . "/publish.php '$queue'", $descriptorspec, $pipes);
+        $process = proc_open("/usr/bin/publish '$queue'", $descriptorspec, $pipes);
         if (is_resource($process)) {
             fwrite($pipes[0], $json_string);
             fclose($pipes[0]);

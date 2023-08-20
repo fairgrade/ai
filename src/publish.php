@@ -1,6 +1,5 @@
 #!/usr/local/bin/php -f
 <?php
-
 if (!isset($argv[1])) die("Usage: php src/publish.php <queue>\n");
 $queue = $argv[1];
 $json_string = file_get_contents("php://stdin");
