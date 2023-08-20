@@ -131,7 +131,7 @@ class DiscordClient extends ConfigLoader
 Before we begin, please note the following important information:
 - This interview is being recorded for record-keeping and evaluation purposes.
 - By participating, you consent to the recording.
-- We are an NYC AEDT-compliant service.
+- This is a NYC AEDT-compliant service.
 - Please review this information carefully before proceeding.
 
 The interview will take about 5 to 10 minutes to complete and you can take as much time as you need to answer each question.
