@@ -31,7 +31,7 @@ try {
     $typing_time = microtime(true) + 4;
     extract($this->promptwriter->single("SELECT `bot_name` FROM `discord_bots` WHERE `bot_id` = {$message["bot_id"]}"));
     $messages = $this->promptwriter->write($message);
-    if ($has_attachments) $messages[] = ["role" => "system", "content" => "$attachment_names\nIf any of the attachments are not PDF, TXT, JPEG, PNG, or WEBP, Inform them that these are the only formats we currently support.  Otherwise, Inform them you have received their $has_attachments file attachment(s) and will review them shortly.  Do not ask any questions.  Just ask them to wait patiently while their resume is processed, or they can continue to add more files if they wish."];
+    if ($has_attachments) $messages[] = ["role" => "system", "content" => "$attachment_names\nIf any of the attachments are not PDF, TXT, JPEG, PNG, or WEBP, Inform them that these are the only formats we currently support.  Otherwise, Inform them you have received their $has_attachments file attachment(s) and will review them shortly.  Do not ask begin asking any questions yet!  Just ask them to wait patiently while their resume is processed, or they can continue to add more files if they wish."];
     $model = 'gpt-3.5-turbo-0613';
     if ($this->promptwriter->last_token_count > 3596) $model = 'gpt-3.5-turbo-16k-0613';
     $prompt = [
