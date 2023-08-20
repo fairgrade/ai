@@ -1,10 +1,10 @@
 <?php
 try {
-    $has_attachments = false;
+    $has_attachments = 0;
     if (isset($message["attachments"])) {
         $allowed_extensions = ["pdf", "txt", "jpg", "jpeg", "png", "webp"];
         foreach ($message["attachments"] as $attachment) {
-            $has_attachments = true;
+            $has_attachments++;
             $file_extension = strtolower(pathinfo($attachment["filename"], PATHINFO_EXTENSION));
             if (!in_array($file_extension, $allowed_extensions)) {
                 $this->sendMessage($message, ["content" => "I'm sorry, but I can't accept attachments of type $file_extension (yet)\nPlease try PDF, TXT, JPG, JPEG, PNG, or WEBP"]);
@@ -29,7 +29,7 @@ try {
     $typing_time = microtime(true) + 4;
     extract($this->promptwriter->single("SELECT `bot_name` FROM `discord_bots` WHERE `bot_id` = {$message["bot_id"]}"));
     $messages = $this->promptwriter->write($message);
-    if ($has_attachments) $messages[] = ["role" => "system", "content" => "Inform them you have received their attachment(s) and will review them shortly."];
+    if ($has_attachments) $messages[] = ["role" => "system", "content" => "Inform them you have received their $has_attachments and will review them shortly."];
     $model = 'gpt-3.5-turbo-0613';
     if ($this->promptwriter->last_token_count > 3596) $model = 'gpt-3.5-turbo-16k-0613';
     $prompt = [
