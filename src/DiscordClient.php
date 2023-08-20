@@ -179,9 +179,9 @@ Please also make sure to upload your resume, as it will greatly assist in the sc
                     'icon_url' => 'https://fairgrade.ai/images/logo.png'
                 ]
             ]));
+            $builder->setContent($welcome_message)
             $this->log_outgoing(Async\await($channel->sendMessage($builder)));
-            // send a message to the channel with the welcome message
-            $this->log_outgoing(Async\await($channel->sendMessage($welcome_message)));
+
             // get the channel id
             $channel_id = $channel->id;
             // insert the channel id into the database
