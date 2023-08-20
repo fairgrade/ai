@@ -1,10 +1,20 @@
 <?php
 try {
     if (isset($message["attachments"])) {
+        $allowed_extensions = ["pdf", "txt", "jpg", "jpeg", "png", "webp"];
         foreach ($message["attachments"] as $attachment) {
+            $file_extension = strtolower(pathinfo($attachment["filename"], PATHINFO_EXTENSION));
+            if (!in_array($file_extension, $allowed_extensions)) {
+                $this->sendMessage($message, ["content" => "I'm sorry, but I can't accept attachments of type $file_extension (yet)\nPlease try PDF, TXT, JPG, JPEG, PNG, or WEBP"]);
+                return true;
+            }
             $file_name = $attachment["filename"];
             $file_url = $attachment["url"];
-            echo ("Attachments found in message: $file_name url: $file_url\n");
+            $message2["t"] = "HANDLE_ATTACHMENT";
+            $message2["d"] = $message;
+            $message2["d"]["file_name"] = $file_name;
+            $message2["d"]["file_url"] = $file_url;
+            $this->bunny->publish("ai_inbox", $message2);
         }
     }
     $this->log_incomming($message);
