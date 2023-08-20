@@ -19,8 +19,8 @@ try {
         'frequency_penalty' => 0,
         'presence_penalty' => 0
     ];
-    $log_id = $this->promptwriter->startChatGPT("Discord Bots", $prompt, 1142616719630803116);
-    $stream = $this->promptwriter->openai->chat()->createStreamed($prompt);
+    $log_id = $pw->startChatGPT("Discord Bots", $prompt, 1142616719630803116);
+    $stream = $pw->openai->chat()->createStreamed($prompt);
     $full_response = "";
     echo (6);
     foreach ($stream as $response) {
@@ -35,13 +35,13 @@ try {
         }
     }
     echo (7);
-    $this->promptwriter->endChatGPT($log_id, $full_response);
+    $pw->endChatGPT($log_id, $full_response);
     echo (8);
     if (substr($full_response, 0, 1) == "[" && strpos($full_response, "]") == 6) $full_response = substr($full_response, 8);
     if (substr($full_response, 0, strlen($bot_name) + 2) == $bot_name . ": ") $full_response = substr($full_response, strlen($bot_name) + 2);
 } catch (\Exception $e) {
     echo (9);
-    $this->promptwriter->errorChatGPT($log_id, print_r($e, true));
+    $pw->errorChatGPT($log_id, print_r($e, true));
     print_r($e);
     if (!isset($full_response) || $full_response == "") $full_response = "I'm sorry, but " . $e->getMessage() . "\n";
     else $full_response .= "\n\nAlso, I'm sorry, but " . $e->getMessage() . "\n";
