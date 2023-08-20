@@ -67,9 +67,9 @@ try {
         $text .= $line . "\n";
     }
     $messages[] = ["role" => "system", "content" => "Uploaded file $file_name: Raw text content: $text === end of raw text content ==="];
-    $messages[] = ["role" => "system", "content" => "Extract all key information from this document including full name,
+    $messages[] = ["role" => "system", "content" => "Extract all key information from this resume/CV/document including full name,
 contact information, education, work experience, skills, and any other information that may be useful.
-If you are unsure if something is useful, include it anyway.
+If you are unsure if something is useful, include it anyway. Do not make up any information.  If it's not included in the docuement flag it as missing.
 If any important information is missing please point that out and request it.
 Write as long as you need to capture all the details.
 Use markdown formatting to organize the information."];
