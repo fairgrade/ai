@@ -127,27 +127,26 @@ class DiscordClient extends ConfigLoader
             ]);
             $channel = Async\await($guild->channels->save($channel));
             // send a Welcome message to the channel by tagging the user
-            $welcome_message = "# Welcome to the interview, <@$member_id>!
-Before we begin, please note the following important information:
-- This interview is being recorded for record-keeping and evaluation purposes.
-- By participating, you consent to the recording.
-- We are an NYC AEDT-compliant service.
-- Please review this information carefully before proceeding.
+            $welcome_message = "# Welcome!
+Before we start the interview, we want to inform you about some important information:
+- The interview will be recorded in accordance with legal requirements for record-keeping and evaluation purposes. Your participation indicates your consent to the recording.
+- Our company is committed to being an Equal Opportunity Employer, which means we do not discriminate based on race, color, religion, sex, national origin, age, disability, or genetic information. Please note that we collect certain information as mandated by law for record-keeping and evaluation purposes.
+- In compliance with NYC AEDT regulations, we use an Automated Employment Decision Making Tool (AEDT) during our hiring process. It is important for you to be aware of this.
+- Lastly, we are dedicated to transparency, and therefore, we are obligated to share information about our most recent bias audit.";
 
-The interview will take about 5 to 10 minutes to complete and you can take as much time as you need to answer each question.
-
-Before we begin, can you please let me know which job opening you are applying for? If you haven't decided yet, I can provide you with a list of our available positions.
-
-Please also make sure to upload your resume, as it will greatly assist in the screening process. You can either upload it directly here or provide a link to a PDF file.";
             // get the distribution date from the database
             extract($this->promptwriter->single("SELECT min(`audit_date`) as `distribution_date` FROM `bias_audit`"));
+            // format distribution date as yyyy-mm-dd
+            $distribution_date = date("Y-m-d", strtotime($distribution_date));
             extract($this->promptwriter->single("SELECT * FROM `bias_audit` ORDER BY `audit_date` DESC LIMIT 1"));
+            // format audit date as yyyy-mm-dd
             $audit_timestamp = strtotime($audit_date);
+            $audit_date = date("Y-m-d", strtotime($audit_date));
             // send a message to the channel with the distribution date
             // use the builder function to create an embed message
             $builder = \Discord\Builders\MessageBuilder::new();
             $builder->addEmbed(new \Discord\Parts\Embed\Embed($this->discord, [
-                'title' => 'FairGrade Bias Audit Report',
+                'title' => 'Bias Audit Report',
                 'description' => "AEDT Distribution Date: $distribution_date",
                 'url' => 'https://fairgrade.ai/bias_audit',
                 'color' => 0x00ff00,
@@ -164,24 +163,62 @@ Please also make sure to upload your resume, as it will greatly assist in the sc
                     ]
                 ],
                 'thumbnail' => [
-                    'url' => 'https://fairgrade.ai/images/logo.png'
+                    'url' => 'https://www.freepnglogos.com/uploads/certified-png/certified-png-transparent-6.png'
                 ],
                 'image' => [
-                    'url' => 'https://fairgrade.ai/images/logo.png'
+                    'url' => 'https://images.squarespace-cdn.com/content/v1/609320326df7672dc3ee6205/1620254871445-L8UATWJHT8RDHGE2TXZ7/PASS+Logo+Horizontal+Full+Color+CROP.png'
                 ],
                 'footer' => [
                     'text' => 'Powered by FairGrade.ai',
-                    'icon_url' => 'https://fairgrade.ai/images/logo.png'
+                    'icon_url' => 'https://fairgrade.ai/wp-content/uploads/2023/08/bot2.png'
                 ],
                 'author' => [
                     'name' => "Independently Audited By:\n$auditor_name",
-                    'url' => 'https://example.com',
-                    'icon_url' => 'https://fairgrade.ai/images/logo.png'
+                    'url' => 'https://indiauditsllc.com',
+                    'icon_url' => 'http://fairgrade.ai/wp-content/uploads/2023/08/auditor.jpeg'
                 ]
             ]));
+            $builder->setContent($welcome_message);
             $this->log_outgoing(Async\await($channel->sendMessage($builder)));
-            // send a message to the channel with the welcome message
-            $this->log_outgoing(Async\await($channel->sendMessage($welcome_message)));
+            sleep(3);
+            $msg1 = "*...Please hold for the next available representative...*";
+            $this->log_outgoing(Async\await($channel->sendMessage($msg1)));
+            sleep(4);
+            $utc = date("Y-m-d H:i:s T", time());
+            $time = time();
+            $msg2 = "*...Arthur has joined the chat...*\n=========================\nInterview started at $utc <t:$time:R>\n=========================\n";
+            $this->log_outgoing(Async\await($channel->sendMessage($msg2)));
+            sleep(2);
+            $this->START_TYPING(["channel_id" => $channel->id]);
+            $msg3 = "Good day! I am Arthur, your Artificial Interviewer. I am pleased to make your acquaintance and hope you are having a productive day!";
+            sleep(3);
+            $this->log_outgoing(Async\await($channel->sendMessage($msg3)));
+            sleep(1);
+            $this->START_TYPING(["channel_id" => $channel->id]);
+            $msg4 = "Our interviews typically last between 5 to 10 minutes, but feel free to take your time in providing detailed and thoughtful responses. Your pace is entirely up to you.";
+            sleep(4);
+            $this->log_outgoing(Async\await($channel->sendMessage($msg4)));
+            sleep(1);
+            $this->START_TYPING(["channel_id" => $channel->id]);
+            $msg5 = "Throughout this interview, I will pose a series of questions, allowing you the flexibility to answer in a manner that suits you best. Whether you choose to type out your responses, share relevant links, or even upload files such as resumes and cover letters, the choice is entirely yours. If there are any questions you prefer not to answer, you can simply skip them.";
+            sleep(6);
+            $this->log_outgoing(Async\await($channel->sendMessage($msg5)));
+            sleep(1);
+            $this->START_TYPING(["channel_id" => $channel->id]);
+            $msg6 = "If you have any inquiries prior to commencing, please do not hesitate to ask. I am available to address any queries related to our current job openings, our organization, or any other topic you may be interested in.";
+            sleep(5);
+            $this->log_outgoing(Async\await($channel->sendMessage($msg6)));
+            sleep(1);
+            $this->START_TYPING(["channel_id" => $channel->id]);
+            $msg7 = "To expedite the process, it would be greatly appreciated if you could provide us with your resume and cover letter by uploading or linking them.";
+            sleep(4);
+            $this->log_outgoing(Async\await($channel->sendMessage($msg7)));
+            sleep(1);
+            $this->START_TYPING(["channel_id" => $channel->id]);
+            $msg8 = "Now, without further ado, shall we begin <@$member_id>?";
+            sleep(3);
+            $this->log_outgoing(Async\await($channel->sendMessage($msg8)));
+
             // get the channel id
             $channel_id = $channel->id;
             // insert the channel id into the database
@@ -286,7 +323,7 @@ Please also make sure to upload your resume, as it will greatly assist in the sc
     private function START_TYPING($message)
     {
         $channel = $this->discord->getChannel($message["channel_id"]);
-        if ($channel) $channel->broadcastTyping();
+        if ($channel) Async\await($channel->broadcastTyping());
         return true;
     }
 
