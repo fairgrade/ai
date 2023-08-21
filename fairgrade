@@ -1,0 +1,9 @@
+#!/usr/local/bin/php -f
+<?php
+
+namespace fairgrade\ai;
+
+if (!isset($argv[1])) die("ERROR: No command specified\n");
+
+require_once(__DIR__ . "/src/ProcessManager.php");
+new ProcessManager($argv[1]);
