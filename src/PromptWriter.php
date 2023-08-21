@@ -94,9 +94,8 @@ class PromptWriter extends SqlClient
                 extract($row);
                 if ($sql_content == "!wipe") break;
                 $ts = date("H:i", $microtime);
-                if ($sender_id == $message["bot_id"]) $role = "assistant";
-                else $role = "user";
-                $history[$history_message_id] = ["role" => $role, "content" => "[$ts] " . $this->bot_names[$sender_id] . ": " . $sql_content];
+                if ($sender_id == $message["bot_id"]) $history[$history_message_id] = ["role" => "assistant", "content" => "[$ts] " . $this->bot_names[$sender_id] . " asked: " . $sql_content];
+                else $history[$history_message_id] = ["role" => "user", "content" => "[$ts] " . $this->bot_names[$sender_id] . " answered: " . $sql_content];
             }
             // sort $history by key ascending
             krsort($history);
