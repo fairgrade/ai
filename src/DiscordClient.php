@@ -301,7 +301,7 @@ Before we begin, please note the following important information:
     private function START_TYPING($message)
     {
         $channel = $this->discord->getChannel($message["channel_id"]);
-        if ($channel) $channel->broadcastTyping();
+        if ($channel) Async\await($channel->broadcastTyping());
         return true;
     }
 
