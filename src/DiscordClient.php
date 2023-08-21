@@ -104,6 +104,7 @@ class DiscordClient extends ConfigLoader
             $channel = $guild->channels->create([
                 'name' => $channel_name,
                 'topic' => $channel_topic,
+                'parent_id' => 1143036464557465720,
                 'permission_overwrites' => [
                     [
                         'id' => $member_id,
@@ -205,20 +206,15 @@ Before we start the interview, we want to inform you about some important inform
             $this->log_outgoing(Async\await($channel->sendMessage($msg5)));
             sleep(1);
             $this->START_TYPING(["channel_id" => $channel->id]);
-            $msg6 = "If you have any inquiries prior to commencing, please do not hesitate to ask. I am available to address any queries related to our current job openings, our organization, or any other topic you may be interested in.";
+            $msg6 = "If you have any inquiries prior to commencing, please do not hesitate to ask. I am available to address any queries related to our current job openings, our organization, or any other topic you may be interested in.\n\n ";
             sleep(5);
             $this->log_outgoing(Async\await($channel->sendMessage($msg6)));
             sleep(1);
             $this->START_TYPING(["channel_id" => $channel->id]);
-            $msg7 = "To expedite the process, it would be greatly appreciated if you could provide us with your resume and cover letter by uploading or linking them.";
+            $msg7 = "<@$member_id> Question 1 of 19: To expedite the process, it would be greatly appreciated if you could provide us with your resume and cover letter by uploading or linking them.";
             sleep(4);
             $this->log_outgoing(Async\await($channel->sendMessage($msg7)));
             sleep(1);
-            $this->START_TYPING(["channel_id" => $channel->id]);
-            $msg8 = "Now, without further ado, shall we begin <@$member_id>?";
-            sleep(3);
-            $this->log_outgoing(Async\await($channel->sendMessage($msg8)));
-
             // get the channel id
             $channel_id = $channel->id;
             // insert the channel id into the database
