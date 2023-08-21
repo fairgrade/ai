@@ -1,3 +1,8 @@
-src/logs.d/*.log
+# Vendor
 src/vendor/
 src/node_modules/
+
+# Generated
+src/logs.d/*
+src/uploads.d/inbox/*
+src/uploads.d/stored/*
