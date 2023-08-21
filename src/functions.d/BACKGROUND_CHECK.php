@@ -1,4 +1,5 @@
 <?php
+// TODO: Actually perform background check
 echo ("BACKGROUND_CHECK\n");
 sleep(5);
 $this->sendMessage($message, ["content" => "🔍 `[  0%]` Generating Search Queries..."]);
@@ -19,7 +20,7 @@ $this->sendMessage($message, ["content" => "✅ `[ 70%]` Information Gathering C
 sleep(10);
 $this->sendMessage($message, ["content" => "✅ `[ 80%]` Analysis Complete... Summarizing..."]);
 sleep(10);
-$this->sendMessage($message, ["content" => "✅ `[ 90%] Summarization Complete... Saving..."]);
+$this->sendMessage($message, ["content" => "✅ `[ 90%]` Summarization Complete... Saving..."]);
 sleep(1);
 $this->sendMessage($message, ["content" => "✅ `[100%]` Report Saved to Database. Background Check Complete!"]);
 sleep(1);
