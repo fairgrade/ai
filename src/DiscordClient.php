@@ -128,7 +128,7 @@ class DiscordClient extends ConfigLoader
             ]);
             $channel = Async\await($guild->channels->save($channel));
             // send a Welcome message to the channel by tagging the user
-            $welcome_message = "# Welcome!
+            $welcome_message = "# Welcome <@$member_id>
 Before we start the interview, we want to inform you about some important information:
 - The interview will be recorded in accordance with legal requirements for record-keeping and evaluation purposes. Your participation indicates your consent to the recording.
 - Our company is committed to being an Equal Opportunity Employer, which means we do not discriminate based on race, color, religion, sex, national origin, age, disability, or genetic information. Please note that we collect certain information as mandated by law for record-keeping and evaluation purposes.
