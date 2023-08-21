@@ -11,19 +11,19 @@ class ProcessManager
         if ($command === "") return;
         switch ($command) {
             case "status":
-                return $this->status();
+                $this->status();
             case "start":
-                return $this->start();
+                $this->start();
             case "restart":
-                return $this->restart();
+                $this->restart();
             case "stop":
-                return $this->stop();
+                $this->stop();
             case "kill":
-                return $this->kill();
+                $this->kill();
             case "wrapper":
-                return $this->wrapper();
+                $this->wrapper();
             case "main":
-                return new ThreadManager;
+                new ThreadManager;
             default:
                 die("ERROR: Invalid Command\n");
         }
@@ -34,8 +34,8 @@ class ProcessManager
         $ps = array();
         $ps2 = array();
         $ps3 = array();
-        exec("ps aux | grep \"fairgrade wrapper\"", $ps);
-        exec("ps aux | grep \"fairgrade main\"", $ps);
+        exec("ps aux | grep \"php fairgrade wrapper\"", $ps);
+        exec("ps aux | grep \"php fairgrade main\"", $ps);
         foreach ($ps as $line) if (!strpos($line, "grep")) $ps2[] = $line;
         foreach ($ps2 as $line) {
             $line = $this->replace("  ", " ", $line);
@@ -63,7 +63,7 @@ class ProcessManager
     {
         $pids = $this->getPids();
         if (sizeof($pids)) die("ERROR: fairgrade is already running.  Not starting.\n");
-        exec("nohup fairgrade wrapper </dev/null >> " . __DIR__ . "/logs.d/wrapper.log 2>&1 &");
+        exec("nohup php fairgrade wrapper </dev/null >> " . __DIR__ . "/logs.d/wrapper.log 2>&1 &");
         usleep(10000);
         $this->status();
     }
@@ -92,7 +92,7 @@ class ProcessManager
     private function wrapper()
     {
         while (true) {
-            passthru("fairgrade main");
+            passthru("php fairgrade main");
             sleep(1);
         }
     }

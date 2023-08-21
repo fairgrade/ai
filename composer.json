@@ -5,7 +5,8 @@
         "symfony/http-client": "^6.3",
         "bunny/bunny": "@dev",
         "mehrab-wj/tiktoken-php": "^1.0",
-        "react/async": "^4.1"
+        "react/async": "^4.1",
+        "vlucas/phpdotenv": "^5.5"
     },
     "config": {
         "allow-plugins": {

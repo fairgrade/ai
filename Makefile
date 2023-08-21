@@ -1,0 +1,2 @@
+start:
+	php fairgrade start

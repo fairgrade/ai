@@ -1,6 +1,6 @@
 # Vendor
-src/vendor/
-src/node_modules/
+vendor
+node_modules
 
 # Generated
 src/logs.d/*

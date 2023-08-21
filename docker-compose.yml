@@ -1,0 +1,36 @@
+version: "2"
+
+services:
+  dev:
+    build:
+      context: .
+      args:
+        PHP_VERSION: "${PHP_VERSION:-8.2}"
+    depends_on:
+      - rabbitmq
+      - mysql
+    volumes:
+      - "./:/fairgrade"
+    environment:
+      - AMQP_DSN=amqp://guest:guest@rabbitmq:5672/fairgrade
+      - RABBITMQ_AMQP_DSN=amqp+rabbitmq://guest:guest@rabbitmq:5672/fairgrade
+
+  mysql:
+    image: mysql:8.1.0
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: fairgrade
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./install/ai.sql:/docker-entrypoint-initdb.d/1.sql"
+
+  rabbitmq:
+    image: "rabbitmq:3.12"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+      - RABBITMQ_DEFAULT_VHOST=fairgrade
+    ports:
+      - "15677:15672"
