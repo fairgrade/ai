@@ -68,22 +68,26 @@ try {
     }
     $messages[] = ["role" => "system", "content" => "Uploaded file $file_name: Raw text content: $text === end of raw text content ==="];
     $messages[] = ["role" => "system", "content" => "This should be a resume.  If it doesn't appear to be a resume then return an error message and ask for it to be retried. 
-Otherwise, Extract all key information from this resume/CV/document including
-0) Language Preference
-1) Position Applying For
-2) Full Name
-3) Contact Information
-4) Location
-5) Education
-6) Most Recent Job
-7) Past Job Experience
-8) Skills
-9) Availability
-10) Seeking W2 or 1099
-11) Salary or Hourly expectations
-12) References (if available)
-13) Work Authorization (citizenship/immigrant/visa status)
-14) Availability for additional rounds of interviews or any required assessments.
+Otherwise, Extract all key information from this resume/CV/document including Required Questions:
+- (1 of 19) Resume Upload: Request the applicant upload, attach, or provide a link to their resume preferably in PDF format. Other standard image formats JPG, PNG, and WebP are also supported.
+- (2 of 19) Language Preference: What is your preferred language of communication?
+- (3 of 19) Could you please provide your full name and any nicknames, maiden names, or aliases?
+- (4 of 19) What is the best way for us to contact you? Please share your email address and phone number.
+- (5 of 19) Where are you currently located?
+- (6 of 19) Which specific position are you interested in within our organization?
+- (7 of 19) What is your highest level of education? Do you have any relevant degrees or certifications?
+- (8 of 19) Can you provide a brief description of your most recent job role and the responsibilities you had?
+- (9 of 19) Please share an example of a challenging project or situation you faced in a previous job and how you successfully handled it.
+- (10 of 19) What specific skills do you possess that are relevant to the position you're applying for?
+- (11 of 19) If you wish, you may provide contact information for professional references who can vouch for your work and character.
+- (12 of 19) What are your preferred work hours schedule? Are you available for overtime or weekend work if needed?
+- (13 of 19) Work Type (W2 or 1099): Are you seeking employment as a W2 employee or are you open to 1099 contract work?
+- (14 of 19) What are your expectations for compensation, whether in terms of salary or hourly rates?
+- (15 of 19) Do you prefer to work on-site, remotely, travel, or a combination of these?
+- (16 of 19) Are you authorized to work in the country where the job is located?
+- (17 of 19) Where do you see yourself in the next 5 years, and how do you envision aligning your goals with the growth of our organization?
+- (18 of 19) Can you share an experience when you felt aligned with an organization's culture or values? How did you contribute to maintaining or strengthening that culture? Additionally, here at our organization, we highly value Fairness, Transparency, and Integrity.
+- (19 of 19) Are you available for further rounds of interviews or any required assessments?
 If you are unsure if something is useful, include it anyway. Do not make up any information.  If it's not included in the docuement flag it as missing.
 If any important information is missing please point that out and request it.
 Write as long as you need to capture all the details.

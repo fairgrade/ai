@@ -56,9 +56,7 @@ try {
     $this->log_incomming($message);
     $message["context"] = "discord";
     extract($this->promptwriter->single("SELECT `microtime` FROM `discord_channels` WHERE `channel_id` = {$message["channel_id"]} AND `bot_id` = {$message["bot_id"]}"));
-    if ($microtime != $message["microtime"] && $message["microtime"] != -1) {
-        return true;
-    }
+    if ($microtime != $message["microtime"] && $message["microtime"] != -1) return true;
     $this->start_typing($message);
     $typing_time = microtime(true) + 4;
     extract($this->promptwriter->single("SELECT `bot_name` FROM `discord_bots` WHERE `bot_id` = {$message["bot_id"]}"));
@@ -69,8 +67,8 @@ try {
     $prompt = [
         'model' => $model,
         'messages' => $messages,
-        'temperature' => 0.986,
-        'top_p' => 0.986,
+        'temperature' => 0.0,
+        'top_p' => 0.0,
         'frequency_penalty' => 0,
         'presence_penalty' => 0
     ];
@@ -97,7 +95,8 @@ try {
     if (!isset($full_response) || $full_response == "") $full_response = "I'm sorry, but " . $e->getMessage() . "\n";
     else $full_response .= "\n\nAlso, I'm sorry, but " . $e->getMessage() . "\n";
 }
-
+extract($this->promptwriter->single("SELECT `microtime` FROM `discord_channels` WHERE `channel_id` = {$message["channel_id"]} AND `bot_id` = {$message["bot_id"]}"));
+if ($microtime != $message["microtime"] && $message["microtime"] != -1) return true;
 if (strlen($full_response)) {
     $this->sendMessage($message, ["content" => $full_response]);
     if (strpos(strtolower($full_response), "quick background check") !== false) {

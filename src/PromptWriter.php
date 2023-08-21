@@ -94,9 +94,8 @@ class PromptWriter extends SqlClient
                 extract($row);
                 if ($sql_content == "!wipe") break;
                 $ts = date("H:i", $microtime);
-                if ($sender_id == $message["bot_id"]) $role = "assistant";
-                else $role = "user";
-                $history[$history_message_id] = ["role" => $role, "content" => "[$ts] " . $this->bot_names[$sender_id] . ": " . $sql_content];
+                if ($sender_id == $message["bot_id"]) $history[$history_message_id] = ["role" => "assistant", "content" => "[$ts] " . $this->bot_names[$sender_id] . " asked: " . $sql_content];
+                else $history[$history_message_id] = ["role" => "user", "content" => "[$ts] " . $this->bot_names[$sender_id] . " answered: " . $sql_content];
             }
             // sort $history by key ascending
             krsort($history);
@@ -160,8 +159,8 @@ class PromptWriter extends SqlClient
         $prompt_token_count = $this->token_count($system_prompt);
         $return_messages[] = ["role" => "system", "content" => $system_prompt];
 
-        $jumbo_prompt = true;
-        $history_space = ((isset($jumbo_prompt) && $jumbo_prompt) || $message["bot_id"] == 1112694320957505607) ? 16384 - 2048 - $prompt_token_count : min(16384 - 2048 - $prompt_token_count, 4096);
+        // leave 1024 tokens for the response
+        $history_space = 16384 - 1024 - $prompt_token_count;
 
         // History
         $history = [];
