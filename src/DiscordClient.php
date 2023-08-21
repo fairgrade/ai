@@ -327,7 +327,7 @@ Before we start the interview, we want to inform you about some important inform
     {
         $guild = $this->discord->guilds[$message["guild_id"]];
         $channel = $guild->channels[$message["channel_id"]];
-        $history = Async\await($channel->getMessageHistory(['limit' => 200]));
+        $history = Async\await($channel->getMessageHistory(['limit' => 150]));
         $publish_message = $message;
         $publish_message["history"] = $history;
         $publish_message["channel_name"] = $channel->name;
