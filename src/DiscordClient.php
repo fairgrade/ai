@@ -127,7 +127,7 @@ class DiscordClient extends ConfigLoader
             ]);
             $channel = Async\await($guild->channels->save($channel));
             // send a Welcome message to the channel by tagging the user
-            $welcome_message = "# Welcome to the interview, <@$member_id>!
+            $welcome_message = "# Welcome!
 Before we start the interview, we want to inform you about some important information:
 - The interview will be recorded in accordance with legal requirements for record-keeping and evaluation purposes. Your participation indicates your consent to the recording.
 - Our company is committed to being an Equal Opportunity Employer, which means we do not discriminate based on race, color, religion, sex, national origin, age, disability, or genetic information. Please note that we collect certain information as mandated by law for record-keeping and evaluation purposes.
@@ -136,13 +136,17 @@ Before we start the interview, we want to inform you about some important inform
 
             // get the distribution date from the database
             extract($this->promptwriter->single("SELECT min(`audit_date`) as `distribution_date` FROM `bias_audit`"));
+            // format distribution date as yyyy-mm-dd
+            $distribution_date = date("Y-m-d", strtotime($distribution_date));
             extract($this->promptwriter->single("SELECT * FROM `bias_audit` ORDER BY `audit_date` DESC LIMIT 1"));
+            // format audit date as yyyy-mm-dd
             $audit_timestamp = strtotime($audit_date);
+            $audit_date = date("Y-m-d", strtotime($audit_date));
             // send a message to the channel with the distribution date
             // use the builder function to create an embed message
             $builder = \Discord\Builders\MessageBuilder::new();
             $builder->addEmbed(new \Discord\Parts\Embed\Embed($this->discord, [
-                'title' => 'FairGrade Bias Audit Report',
+                'title' => 'Bias Audit Report',
                 'description' => "AEDT Distribution Date: $distribution_date",
                 'url' => 'https://fairgrade.ai/bias_audit',
                 'color' => 0x00ff00,
@@ -159,14 +163,14 @@ Before we start the interview, we want to inform you about some important inform
                     ]
                 ],
                 'thumbnail' => [
-                    'url' => 'https://fairgrade.ai/images/logo.png'
+                    'url' => 'https://fairgrade.ai/wp-content/uploads/2023/08/bot2.png'
                 ],
                 'image' => [
-                    'url' => 'https://fairgrade.ai/images/logo.png'
+                    'url' => 'https://fairgrade.ai/wp-content/uploads/2023/08/bot2.png'
                 ],
                 'footer' => [
                     'text' => 'Powered by FairGrade.ai',
-                    'icon_url' => 'https://fairgrade.ai/images/logo.png'
+                    'icon_url' => 'https://fairgrade.ai/wp-content/uploads/2023/08/bot2.png'
                 ],
                 'author' => [
                     'name' => "Independently Audited By:\n$auditor_name",
@@ -176,17 +180,17 @@ Before we start the interview, we want to inform you about some important inform
             ]));
             $builder->setContent($welcome_message);
             $this->log_outgoing(Async\await($channel->sendMessage($builder)));
-            sleep(2);
+            sleep(3);
             $msg1 = "*...Please hold for the next available representative...*";
             $this->log_outgoing(Async\await($channel->sendMessage($msg1)));
-            sleep(10);
-            $utc = date("c");
+            sleep(4);
+            $utc = date("Y-m-d H:i:s T", time());
             $time = time();
-            $msg2 = "*...<@$bot_id> has joined the chat...*\n=========================\nInterview started at $utc <t:$time:R>";
+            $msg2 = "*...Arthur has joined the chat...*\n=========================\nInterview started at $utc <t:$time:R>\n=========================\n";
             $this->log_outgoing(Async\await($channel->sendMessage($msg2)));
             sleep(2);
             $this->START_TYPING(["channel_id" => $channel->id]);
-            $msg3 = "Good day! I am <@$bot_id>, your Artificial Interviewer. I am pleased to make your acquaintance and hope you are having a productive day!";
+            $msg3 = "Good day! I am Arthur, your Artificial Interviewer. I am pleased to make your acquaintance and hope you are having a productive day!";
             sleep(3);
             $this->log_outgoing(Async\await($channel->sendMessage($msg3)));
             sleep(1);
