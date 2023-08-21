@@ -6,3 +6,6 @@ node_modules
 src/logs.d/*
 src/uploads.d/inbox/*
 src/uploads.d/stored/*
+
+# Env
+.env
