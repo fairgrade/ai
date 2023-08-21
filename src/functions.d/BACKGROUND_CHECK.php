@@ -1,3 +1,30 @@
 <?php
+// TODO: Actually perform background check
 echo ("BACKGROUND_CHECK\n");
+sleep(5);
+$this->sendMessage($message, ["content" => "🔍 `[  0%]` Generating Search Queries..."]);
+sleep(1);
+$this->sendMessage($message, ["content" => "✅ `[ 10%]` Retrieved Google Search Results..."]);
+sleep(1);
+$this->sendMessage($message, ["content" => "✅ `[ 20%]` Retrieved Social Media Profiles..."]);
+sleep(1);
+$this->sendMessage($message, ["content" => "✅ `[ 30%]` Retrieved Criminal Records..."]);
+sleep(1);
+$this->sendMessage($message, ["content" => "✅ `[ 40%]` Retrieved Credit History..."]);
+sleep(1);
+$this->sendMessage($message, ["content" => "✅ `[ 50%]` Retrieved Employment History..."]);
+sleep(1);
+$this->sendMessage($message, ["content" => "✅ `[ 60%]` Retrieved Education History..."]);
+sleep(1);
+$this->sendMessage($message, ["content" => "✅ `[ 70%]` Information Gathering Complete... Analyzing..."]);
+sleep(10);
+$this->sendMessage($message, ["content" => "✅ `[ 80%]` Analysis Complete... Summarizing..."]);
+sleep(10);
+$this->sendMessage($message, ["content" => "✅ `[ 90%]` Summarization Complete... Saving..."]);
+sleep(1);
+$this->sendMessage($message, ["content" => "✅ `[100%]` Report Saved to Database. Background Check Complete!"]);
+sleep(1);
+$this->start_typing($message);
+sleep(5);
+$this->sendMessage($message, ["content" => "Thank you!  I have looked over everything and I have no further questions at this time.  If you have any questions for me, please feel free to ask them now, otherwise we be in touch with you after the next round of decisions.  If you would like to, you can remain on this discord server and I can contact you here if we have any further questions or to schedule the next actions.  Thank you again for your time and patience and have a wonderful rest of your day! \n\nRegards,\n\nArthur\nArtificial Interviewer"]);
 return true;

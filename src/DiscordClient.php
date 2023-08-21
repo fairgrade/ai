@@ -104,6 +104,7 @@ class DiscordClient extends ConfigLoader
             $channel = $guild->channels->create([
                 'name' => $channel_name,
                 'topic' => $channel_topic,
+                'parent_id' => 1143036464557465720,
                 'permission_overwrites' => [
                     [
                         'id' => $member_id,
@@ -127,7 +128,7 @@ class DiscordClient extends ConfigLoader
             ]);
             $channel = Async\await($guild->channels->save($channel));
             // send a Welcome message to the channel by tagging the user
-            $welcome_message = "# Welcome!
+            $welcome_message = "# Welcome <@$member_id>
 Before we start the interview, we want to inform you about some important information:
 - The interview will be recorded in accordance with legal requirements for record-keeping and evaluation purposes. Your participation indicates your consent to the recording.
 - Our company is committed to being an Equal Opportunity Employer, which means we do not discriminate based on race, color, religion, sex, national origin, age, disability, or genetic information. Please note that we collect certain information as mandated by law for record-keeping and evaluation purposes.
@@ -163,10 +164,10 @@ Before we start the interview, we want to inform you about some important inform
                     ]
                 ],
                 'thumbnail' => [
-                    'url' => 'https://www.freepnglogos.com/uploads/certified-png/certified-png-transparent-6.png'
+                    'url' => 'http://fairgrade.ai/wp-content/uploads/2023/08/certified-e1692610036316.png'
                 ],
                 'image' => [
-                    'url' => 'https://images.squarespace-cdn.com/content/v1/609320326df7672dc3ee6205/1620254871445-L8UATWJHT8RDHGE2TXZ7/PASS+Logo+Horizontal+Full+Color+CROP.png'
+                    'url' => 'http://fairgrade.ai/wp-content/uploads/2023/08/pass-e1692616879329.png'
                 ],
                 'footer' => [
                     'text' => 'Powered by FairGrade.ai',
@@ -205,20 +206,15 @@ Before we start the interview, we want to inform you about some important inform
             $this->log_outgoing(Async\await($channel->sendMessage($msg5)));
             sleep(1);
             $this->START_TYPING(["channel_id" => $channel->id]);
-            $msg6 = "If you have any inquiries prior to commencing, please do not hesitate to ask. I am available to address any queries related to our current job openings, our organization, or any other topic you may be interested in.";
+            $msg6 = "If you have any inquiries prior to commencing, please do not hesitate to ask. I am available to address any queries related to our current job openings, our organization, or any other topic you may be interested in.\n\n ...";
             sleep(5);
             $this->log_outgoing(Async\await($channel->sendMessage($msg6)));
             sleep(1);
             $this->START_TYPING(["channel_id" => $channel->id]);
-            $msg7 = "To expedite the process, it would be greatly appreciated if you could provide us with your resume and cover letter by uploading or linking them.";
+            $msg7 = "<@$member_id> Question 1 of 19: To expedite the process, it would be greatly appreciated if you could provide us with your resume and cover letter by uploading or linking them.";
             sleep(4);
             $this->log_outgoing(Async\await($channel->sendMessage($msg7)));
             sleep(1);
-            $this->START_TYPING(["channel_id" => $channel->id]);
-            $msg8 = "Now, without further ado, shall we begin <@$member_id>?";
-            sleep(3);
-            $this->log_outgoing(Async\await($channel->sendMessage($msg8)));
-
             // get the channel id
             $channel_id = $channel->id;
             // insert the channel id into the database
@@ -331,7 +327,7 @@ Before we start the interview, we want to inform you about some important inform
     {
         $guild = $this->discord->guilds[$message["guild_id"]];
         $channel = $guild->channels[$message["channel_id"]];
-        $history = Async\await($channel->getMessageHistory(['limit' => 40]));
+        $history = Async\await($channel->getMessageHistory(['limit' => 100]));
         $publish_message = $message;
         $publish_message["history"] = $history;
         $publish_message["channel_name"] = $channel->name;
