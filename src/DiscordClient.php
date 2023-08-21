@@ -167,7 +167,7 @@ Before we start the interview, we want to inform you about some important inform
                     'url' => 'http://fairgrade.ai/wp-content/uploads/2023/08/certified-e1692610036316.png'
                 ],
                 'image' => [
-                    'url' => 'http://fairgrade.ai/wp-content/uploads/2023/08/pass-e1692609817974.png'
+                    'url' => 'http://fairgrade.ai/wp-content/uploads/2023/08/pass-e1692616879329.png'
                 ],
                 'footer' => [
                     'text' => 'Powered by FairGrade.ai',
