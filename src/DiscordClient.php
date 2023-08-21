@@ -130,7 +130,9 @@ class DiscordClient extends ConfigLoader
             $welcome_message = "# Welcome to the interview, <@$member_id>!
 Before we begin, please note the following important information:
 - By participating you consent to this interview being recorded for record-keeping and evaluation purposes as required by law.
-- This is a NYC AEDT-compliant service. We are required by law to notify you we use this Automated Employment Decision Making Tools(AEDT) in our hiring process along with this information about the most recent bias audit:";
+- This is a NYC AEDT-compliant service.
+- We are required by law to notify you we use this Automated Employment Decision Making Tool (AEDT) in our hiring process.
+- We are also required to provide you the following information about our most recent bias audit.";
 
             // get the distribution date from the database
             extract($this->promptwriter->single("SELECT min(`audit_date`) as `distribution_date` FROM `bias_audit`"));
@@ -176,7 +178,7 @@ Before we begin, please note the following important information:
             $this->log_outgoing(Async\await($channel->sendMessage($builder)));
             $this->START_TYPING(["channel_id" => $channel->id]);
             sleep(5);
-            $msg2 = "Hi! My name is Arthur and I will be your Artificial Interviewer, but you can call me <@1142616719630803116>!  It's nice to meet you and I hope you're well today!";
+            $msg2 = "=========================\nHi! My name is Arthur and I will be your Artificial Interviewer, but you can call me <@1142616719630803116>!  It's nice to meet you and I hope you're well today!";
             $this->log_outgoing(Async\await($channel->sendMessage($msg2)));
             $this->START_TYPING(["channel_id" => $channel->id]);
             sleep(4);
