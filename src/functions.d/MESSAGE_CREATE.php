@@ -69,8 +69,8 @@ try {
     $prompt = [
         'model' => $model,
         'messages' => $messages,
-        'temperature' => 0.986,
-        'top_p' => 0.986,
+        'temperature' => 0.0,
+        'top_p' => 0.0,
         'frequency_penalty' => 0,
         'presence_penalty' => 0
     ];
