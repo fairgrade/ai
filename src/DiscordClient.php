@@ -194,10 +194,13 @@ Before we begin, please note the following important information:
             $msg5 = "Please let me know if you have any questions before we begin. Feel free to ask me about our current job openings, our company, or anything else you'd like to know.";
             $this->log_outgoing(Async\await($channel->sendMessage($msg5)));
             $this->START_TYPING(["channel_id" => $channel->id]);
-            sleep(2);
-            $msg6 = "Are you ready to begin?";
+            sleep(3);
+            $msg6 = "It will help us save a lot of time if you can upload or link your resume and cover letter now.";
             $this->log_outgoing(Async\await($channel->sendMessage($msg6)));
             $this->START_TYPING(["channel_id" => $channel->id]);
+            sleep(2);
+            $msg7 = "Are you ready to begin <@$member_id>?";
+            $this->log_outgoing(Async\await($channel->sendMessage($msg7)));
             sleep(2);
 
             // get the channel id
