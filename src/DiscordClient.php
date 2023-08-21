@@ -163,10 +163,10 @@ Before we start the interview, we want to inform you about some important inform
                     ]
                 ],
                 'thumbnail' => [
-                    'url' => 'https://fairgrade.ai/wp-content/uploads/2023/08/bot2.png'
+                    'url' => 'https://www.freepnglogos.com/uploads/certified-png/certified-png-transparent-6.png'
                 ],
                 'image' => [
-                    'url' => 'https://fairgrade.ai/wp-content/uploads/2023/08/bot2.png'
+                    'url' => 'https://images.squarespace-cdn.com/content/v1/609320326df7672dc3ee6205/1620254871445-L8UATWJHT8RDHGE2TXZ7/PASS+Logo+Horizontal+Full+Color+CROP.png'
                 ],
                 'footer' => [
                     'text' => 'Powered by FairGrade.ai',
