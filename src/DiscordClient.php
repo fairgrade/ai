@@ -128,13 +128,11 @@ class DiscordClient extends ConfigLoader
             $channel = Async\await($guild->channels->save($channel));
             // send a Welcome message to the channel by tagging the user
             $welcome_message = "# Welcome to the interview, <@$member_id>!
-            Before we start the interview, we want to inform you about some important information:
-                The interview will be recorded in accordance with legal requirements for record-keeping and evaluation purposes. Your participation indicates your consent to the recording.
-                Our company is committed to being an Equal Opportunity Employer, which means we do not discriminate based on race, color, religion, sex, national origin, age, disability, or genetic information. Please note that we collect certain information as mandated by law for record-keeping and evaluation purposes.
-                In compliance with NYC AEDT regulations, we use an Automated Employment Decision Making Tool (AEDT) during our hiring process. It is important for you to be aware of this.
-                Lastly, we are dedicated to transparency, and therefore, we are obligated to share information about our most recent bias audit.
-                
-                If you have any questions or concerns, please feel free to raise them before we proceed with the interview.";
+Before we start the interview, we want to inform you about some important information:
+- The interview will be recorded in accordance with legal requirements for record-keeping and evaluation purposes. Your participation indicates your consent to the recording.
+- Our company is committed to being an Equal Opportunity Employer, which means we do not discriminate based on race, color, religion, sex, national origin, age, disability, or genetic information. Please note that we collect certain information as mandated by law for record-keeping and evaluation purposes.
+- In compliance with NYC AEDT regulations, we use an Automated Employment Decision Making Tool (AEDT) during our hiring process. It is important for you to be aware of this.
+- Lastly, we are dedicated to transparency, and therefore, we are obligated to share information about our most recent bias audit.";
 
             // get the distribution date from the database
             extract($this->promptwriter->single("SELECT min(`audit_date`) as `distribution_date` FROM `bias_audit`"));
