@@ -22,11 +22,11 @@ $filename = __DIR__ . "/../../install/ai.sql";
 $file = fopen($filename, "w");
 
 foreach ($tables as $table) {
-    $result = $pdo->query("SHOW CREATE TABLE $table")->fetch(PDO::FETCH_ASSOC);
+    $result = $pdo->query("SHOW CREATE TABLE `$table`")->fetch(PDO::FETCH_ASSOC);
     $createTableStmt = $result['Create Table'];
     fwrite($file, $createTableStmt . ";\n");
 }
 
 fclose($file);
 
-echo "Database structure dumped to $filename successfully!";
+echo "Database structure dumped to $filename successfully!\n";
