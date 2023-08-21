@@ -164,10 +164,10 @@ Before we start the interview, we want to inform you about some important inform
                     ]
                 ],
                 'thumbnail' => [
-                    'url' => 'https://www.freepnglogos.com/uploads/certified-png/certified-png-transparent-6.png'
+                    'url' => 'http://fairgrade.ai/wp-content/uploads/2023/08/certified-e1692610036316.png'
                 ],
                 'image' => [
-                    'url' => 'https://images.squarespace-cdn.com/content/v1/609320326df7672dc3ee6205/1620254871445-L8UATWJHT8RDHGE2TXZ7/PASS+Logo+Horizontal+Full+Color+CROP.png'
+                    'url' => 'http://fairgrade.ai/wp-content/uploads/2023/08/pass-e1692609817974.png'
                 ],
                 'footer' => [
                     'text' => 'Powered by FairGrade.ai',
@@ -206,7 +206,7 @@ Before we start the interview, we want to inform you about some important inform
             $this->log_outgoing(Async\await($channel->sendMessage($msg5)));
             sleep(1);
             $this->START_TYPING(["channel_id" => $channel->id]);
-            $msg6 = "If you have any inquiries prior to commencing, please do not hesitate to ask. I am available to address any queries related to our current job openings, our organization, or any other topic you may be interested in.\n\n ";
+            $msg6 = "If you have any inquiries prior to commencing, please do not hesitate to ask. I am available to address any queries related to our current job openings, our organization, or any other topic you may be interested in.\n\n ...";
             sleep(5);
             $this->log_outgoing(Async\await($channel->sendMessage($msg6)));
             sleep(1);
