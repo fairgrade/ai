@@ -128,12 +128,13 @@ class DiscordClient extends ConfigLoader
             $channel = Async\await($guild->channels->save($channel));
             // send a Welcome message to the channel by tagging the user
             $welcome_message = "# Welcome to the interview, <@$member_id>!
-Before we begin, please note the following important information:
-- By participating you consent to this interview being recorded for record-keeping and evaluation purposes as required by law.
-- We are an Equal Opportunity Employer that pledges to not discriminate against employees based on race, color, religion, sex, national origin, age, disability or genetic information.
-- We are however required to collect some of this information to provide to the government for record-keeping and evaluation purposes required by law. 
-- This is a NYC AEDT-compliant service and we are required by law to notify you we use this Automated Employment Decision Making Tool (AEDT) to assist in decision-making in our hiring process.
-- We are also required to provide you the following information about our most recent bias audit.";
+            Before we start the interview, we want to inform you about some important information:
+                The interview will be recorded in accordance with legal requirements for record-keeping and evaluation purposes. Your participation indicates your consent to the recording.
+                Our company is committed to being an Equal Opportunity Employer, which means we do not discriminate based on race, color, religion, sex, national origin, age, disability, or genetic information. Please note that we collect certain information as mandated by law for record-keeping and evaluation purposes.
+                In compliance with NYC AEDT regulations, we use an Automated Employment Decision Making Tool (AEDT) during our hiring process. It is important for you to be aware of this.
+                Lastly, we are dedicated to transparency, and therefore, we are obligated to share information about our most recent bias audit.
+                
+                If you have any questions or concerns, please feel free to raise them before we proceed with the interview.";
 
             // get the distribution date from the database
             extract($this->promptwriter->single("SELECT min(`audit_date`) as `distribution_date` FROM `bias_audit`"));
@@ -178,8 +179,11 @@ Before we begin, please note the following important information:
             $builder->setContent($welcome_message);
             $this->log_outgoing(Async\await($channel->sendMessage($builder)));
             $this->START_TYPING(["channel_id" => $channel->id]);
+            sleep(2);
+            $msg1 = "*Please hold for the next available representative...*";
+            $this->log_outgoing(Async\await($channel->sendMessage($msg1)));
             sleep(10);
-            $msg2 = "=========================\nHi! My name is <@1142616719630803116> and I will be your Artificial Interviewer. It's nice to meet you and I hope you're well today!";
+            $msg2 = "*Arthur has joined the chat.*\n=========================\nHi <@$member_id>! My name is <@1142616719630803116> and I will be your Artificial Interviewer. It's nice to meet you and I hope you're well today!";
             $this->log_outgoing(Async\await($channel->sendMessage($msg2)));
             $this->START_TYPING(["channel_id" => $channel->id]);
             sleep(8);
