@@ -170,8 +170,8 @@ Before we start the interview, we want to inform you about some important inform
                 ],
                 'author' => [
                     'name' => "Independently Audited By:\n$auditor_name",
-                    'url' => 'https://example.com',
-                    'icon_url' => 'https://fairgrade.ai/images/logo.png'
+                    'url' => 'https://indiauditsllc.com',
+                    'icon_url' => 'http://fairgrade.ai/wp-content/uploads/2023/08/auditor.jpeg'
                 ]
             ]));
             $builder->setContent($welcome_message);
