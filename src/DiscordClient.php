@@ -130,8 +130,9 @@ class DiscordClient extends ConfigLoader
             $welcome_message = "# Welcome to the interview, <@$member_id>!
 Before we begin, please note the following important information:
 - By participating you consent to this interview being recorded for record-keeping and evaluation purposes as required by law.
-- This is a NYC AEDT-compliant service.
-- We are required by law to notify you we use this Automated Employment Decision Making Tool (AEDT) in our hiring process.
+- We are an Equal Opportunity Employer that pledges to not discriminate against employees based on race, color, religion, sex, national origin, age, disability or genetic information.
+- We are however required to collect some of this information to provide to the government for record-keeping and evaluation purposes required by law. 
+- This is a NYC AEDT-compliant service and we are required by law to notify you we use this Automated Employment Decision Making Tool (AEDT) to assist in decision-making in our hiring process.
 - We are also required to provide you the following information about our most recent bias audit.";
 
             // get the distribution date from the database
@@ -177,23 +178,23 @@ Before we begin, please note the following important information:
             $builder->setContent($welcome_message);
             $this->log_outgoing(Async\await($channel->sendMessage($builder)));
             $this->START_TYPING(["channel_id" => $channel->id]);
-            sleep(5);
-            $msg2 = "=========================\nHi! My name is Arthur and I will be your Artificial Interviewer, but you can call me <@1142616719630803116>!  It's nice to meet you and I hope you're well today!";
+            sleep(10);
+            $msg2 = "=========================\nHi! My name is <@1142616719630803116> and I will be your Artificial Interviewer. It's nice to meet you and I hope you're well today!";
             $this->log_outgoing(Async\await($channel->sendMessage($msg2)));
             $this->START_TYPING(["channel_id" => $channel->id]);
-            sleep(4);
+            sleep(8);
             $msg3 = "These interviews typically take about 5 to 10 minutes to complete but there is no time limit and you can take as much time as you need to answer each question at your own pace.";
             $this->log_outgoing(Async\await($channel->sendMessage($msg3)));
             $this->START_TYPING(["channel_id" => $channel->id]);
-            sleep(3);
+            sleep(6);
             $msg4 = "I will ask you a series of questions and you can answer them in any way you like.  You can type your answers, paste a link, or even upload a PDF or Image file.  You can also skip any question you don't want to answer.";
             $this->log_outgoing(Async\await($channel->sendMessage($msg4)));
             $this->START_TYPING(["channel_id" => $channel->id]);
-            sleep(2);
+            sleep(4);
             $msg5 = "Please let me know if you have any questions before we begin. Feel free to ask me about our current job openings, our company, or anything else you'd like to know.";
             $this->log_outgoing(Async\await($channel->sendMessage($msg5)));
             $this->START_TYPING(["channel_id" => $channel->id]);
-            sleep(1);
+            sleep(2);
             $msg6 = "Are you ready to begin?";
             $this->log_outgoing(Async\await($channel->sendMessage($msg6)));
             $this->START_TYPING(["channel_id" => $channel->id]);
