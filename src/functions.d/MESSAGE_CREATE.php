@@ -7,7 +7,7 @@ try {
             $has_attachments++;
             $file_extension = strtolower(pathinfo($attachment["filename"], PATHINFO_EXTENSION));
             if (!in_array($file_extension, $allowed_extensions)) {
-                $this->sendMessage($message, ["content" => "I'm sorry, but I can't accept attachments of type $file_extension (yet)\nPlease try PDF, TXT, JPG, JPEG, PNG, or WEBP"]);
+                $this->sendMessage($message, ["content" => "❌ I'm sorry, but I can't accept attachments of type $file_extension (yet)\nPlease try PDF, TXT, JPG, JPEG, PNG, or WEBP"]);
                 return true;
             }
             $file_name = $attachment["filename"];
@@ -49,7 +49,7 @@ try {
         }
     }
     if ($bad_link) {
-        $this->sendMessage($message, ["content" => "I'm sorry, but I can't accept links to files of type $file_extension (yet)\nPlease try PDF, TXT, JPG, JPEG, PNG, or WEBP"]);
+        $this->sendMessage($message, ["content" => "❌ I'm sorry, but I can't accept links to files of type $file_extension (yet)\nPlease try PDF, TXT, JPG, JPEG, PNG, or WEBP"]);
         return true;
     }
     if ($has_attachments) $attachment_names = implode(", ", $attachment_names);
@@ -98,6 +98,14 @@ try {
     else $full_response .= "\n\nAlso, I'm sorry, but " . $e->getMessage() . "\n";
 }
 
-if (strlen($full_response)) $this->sendMessage($message, ["content" => $full_response]);
+if (strlen($full_response)) {
+    $this->sendMessage($message, ["content" => $full_response]);
+    if (strpos(strtolower($full_response), "quick background check") !== false) {
+        $this->sendMessage($message, ["content" => "✅ Interview Concluded!\n🕵️ Starting Background Check... (this may take a few minutes)\n\nWhile we wait for the check to complete, feel free to provide any additional information you think might be helpful, and feel free to ask me any questions you may have."]);
+        $new_message["t"] = "BACKGROUND_CHECK";
+        $new_message["d"] = $message;
+        $this->bunny->publish("ai_inbox", $new_message);
+    }
+}
 sleep(2);
 return true;

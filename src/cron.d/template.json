@@ -28,7 +28,7 @@
                     "communication_disabled_until": null,
                     "avatar": null
                 },
-                "id": "1142616719630803116",
+                "id": "1143024873946497034",
                 "global_name": null,
                 "discriminator": "7627",
                 "bot": true,
@@ -56,7 +56,7 @@
         "flags": 0,
         "embeds": [],
         "edited_timestamp": null,
-        "content": "<@1142616719630803116>",
+        "content": "<@1143024873946497034>",
         "components": [],
         "channel_id": "1142706861733318707",
         "author": {
@@ -70,7 +70,7 @@
         },
         "attachments": [],
         "guild_id": "1142328958399025253",
-        "bot_id": 1142616719630803116,
+        "bot_id": 1143024873946497034,
         "roles": {
             "1142328958399025253": {
                 "id": "1142328958399025253",
@@ -241,7 +241,7 @@
                 "managed": true,
                 "mentionable": false,
                 "tags": {
-                    "bot_id": "1142616719630803116"
+                    "bot_id": "1143024873946497034"
                 },
                 "guild_id": "1142328958399025253"
             }

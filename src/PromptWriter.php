@@ -160,6 +160,7 @@ class PromptWriter extends SqlClient
         $prompt_token_count = $this->token_count($system_prompt);
         $return_messages[] = ["role" => "system", "content" => $system_prompt];
 
+        $jumbo_prompt = true;
         $history_space = ((isset($jumbo_prompt) && $jumbo_prompt) || $message["bot_id"] == 1112694320957505607) ? 16384 - 2048 - $prompt_token_count : min(16384 - 2048 - $prompt_token_count, 4096);
 
         // History
